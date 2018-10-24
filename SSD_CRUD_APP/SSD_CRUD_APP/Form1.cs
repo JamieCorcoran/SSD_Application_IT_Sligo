@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -15,7 +16,7 @@ namespace SSD_CRUD_APP
         public Form1()
         {
             InitializeComponent();
-
+            CheckForFile();
         }
 
         private void addBook_Click(object sender, EventArgs e)
@@ -39,6 +40,20 @@ namespace SSD_CRUD_APP
         private void deleteBook_Click(object sender, EventArgs e)
         {
 
+        }
+        private void CheckForFile()
+        {
+            String currentDir = Directory.GetCurrentDirectory();
+
+            var fileToFind = "UserDetails.csv";
+
+            var result = Directory
+                .EnumerateFiles(currentDir, fileToFind, SearchOption.AllDirectories)
+                .FirstOrDefault();
+            if (result != currentDir + "\\UserDetails.csv")
+            {
+                File.Create(currentDir + "\\UserDetails.csv");
+            }
         }
     }
 }
