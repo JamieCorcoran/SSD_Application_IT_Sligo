@@ -21,5 +21,10 @@ namespace SSD_CRUD_APP
         {
             this.Close();
         }
+
+        private void updateButton_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }

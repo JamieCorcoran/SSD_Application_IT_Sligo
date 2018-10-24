@@ -37,7 +37,7 @@
             this.nameLabel = new System.Windows.Forms.Label();
             this.nameTextBox = new System.Windows.Forms.TextBox();
             this.cancelButton = new System.Windows.Forms.Button();
-            this.button1 = new System.Windows.Forms.Button();
+            this.updateButton = new System.Windows.Forms.Button();
             this.header = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
@@ -132,19 +132,20 @@
             this.cancelButton.UseVisualStyleBackColor = false;
             this.cancelButton.Click += new System.EventHandler(this.cancelButton_Click);
             // 
-            // button1
+            // updateButton
             // 
-            this.button1.BackColor = System.Drawing.Color.White;
-            this.button1.FlatAppearance.MouseOverBackColor = System.Drawing.Color.LightSteelBlue;
-            this.button1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.button1.Font = new System.Drawing.Font("Arial Rounded MT Bold", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button1.ForeColor = System.Drawing.Color.Black;
-            this.button1.Location = new System.Drawing.Point(77, 335);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(159, 35);
-            this.button1.TabIndex = 22;
-            this.button1.Text = "Add Book";
-            this.button1.UseVisualStyleBackColor = false;
+            this.updateButton.BackColor = System.Drawing.Color.White;
+            this.updateButton.FlatAppearance.MouseOverBackColor = System.Drawing.Color.LightSteelBlue;
+            this.updateButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.updateButton.Font = new System.Drawing.Font("Arial Rounded MT Bold", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.updateButton.ForeColor = System.Drawing.Color.Black;
+            this.updateButton.Location = new System.Drawing.Point(77, 335);
+            this.updateButton.Name = "updateButton";
+            this.updateButton.Size = new System.Drawing.Size(159, 35);
+            this.updateButton.TabIndex = 22;
+            this.updateButton.Text = "Update Book";
+            this.updateButton.UseVisualStyleBackColor = false;
+            this.updateButton.Click += new System.EventHandler(this.updateButton_Click);
             // 
             // header
             // 
@@ -172,7 +173,7 @@
             this.Controls.Add(this.nameLabel);
             this.Controls.Add(this.nameTextBox);
             this.Controls.Add(this.cancelButton);
-            this.Controls.Add(this.button1);
+            this.Controls.Add(this.updateButton);
             this.Controls.Add(this.header);
             this.Name = "UpdateBook";
             this.Text = "UpdateBook";
@@ -192,7 +193,7 @@
         private System.Windows.Forms.Label nameLabel;
         private System.Windows.Forms.TextBox nameTextBox;
         private System.Windows.Forms.Button cancelButton;
-        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button updateButton;
         private System.Windows.Forms.Label header;
     }
 }

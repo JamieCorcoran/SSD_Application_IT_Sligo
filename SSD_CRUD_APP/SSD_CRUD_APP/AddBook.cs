@@ -22,7 +22,7 @@ namespace SSD_CRUD_APP
             this.Close();
         }
 
-        private void button1_Click(object sender, EventArgs e)
+        private void addButton_Click(object sender, EventArgs e)
         {
 
         }

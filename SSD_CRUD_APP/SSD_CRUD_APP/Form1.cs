@@ -15,6 +15,7 @@ namespace SSD_CRUD_APP
         public Form1()
         {
             InitializeComponent();
+
         }
 
         private void addBook_Click(object sender, EventArgs e)
