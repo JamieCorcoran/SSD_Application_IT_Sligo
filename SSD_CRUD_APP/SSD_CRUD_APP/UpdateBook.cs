@@ -10,9 +10,9 @@ using System.Windows.Forms;
 
 namespace SSD_CRUD_APP
 {
-    public partial class AddBook : Form
+    public partial class UpdateBook : Form
     {
-        public AddBook()
+        public UpdateBook()
         {
             InitializeComponent();
         }
@@ -20,11 +20,6 @@ namespace SSD_CRUD_APP
         private void cancelButton_Click(object sender, EventArgs e)
         {
             this.Close();
-        }
-
-        private void button1_Click(object sender, EventArgs e)
-        {
-
         }
     }
 }

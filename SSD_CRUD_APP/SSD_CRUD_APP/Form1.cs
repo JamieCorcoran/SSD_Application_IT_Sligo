@@ -19,17 +19,20 @@ namespace SSD_CRUD_APP
 
         private void addBook_Click(object sender, EventArgs e)
         {
-
+            AddBook addBookForm = new AddBook();
+            addBookForm.Show();
         }
 
         private void updateBook_Click(object sender, EventArgs e)
         {
-
+            UpdateBook updateBookForm = new UpdateBook();
+            updateBookForm.Show();
         }
 
         private void viewBooks_Click(object sender, EventArgs e)
         {
-
+            ViewBooks viewBooksForm = new ViewBooks();
+            viewBooksForm.Show();
         }
 
         private void deleteBook_Click(object sender, EventArgs e)
