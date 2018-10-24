@@ -135,6 +135,7 @@
             // updateButton
             // 
             this.updateButton.BackColor = System.Drawing.Color.White;
+            this.updateButton.FlatAppearance.BorderColor = System.Drawing.Color.White;
             this.updateButton.FlatAppearance.MouseOverBackColor = System.Drawing.Color.LightSteelBlue;
             this.updateButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.updateButton.Font = new System.Drawing.Font("Arial Rounded MT Bold", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));

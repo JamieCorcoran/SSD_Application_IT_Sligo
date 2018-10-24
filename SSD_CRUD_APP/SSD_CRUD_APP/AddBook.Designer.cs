@@ -70,6 +70,7 @@
             // addButton
             // 
             this.addButton.BackColor = System.Drawing.Color.White;
+            this.addButton.FlatAppearance.BorderColor = System.Drawing.Color.White;
             this.addButton.FlatAppearance.MouseOverBackColor = System.Drawing.Color.LightSteelBlue;
             this.addButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.addButton.Font = new System.Drawing.Font("Arial Rounded MT Bold", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));

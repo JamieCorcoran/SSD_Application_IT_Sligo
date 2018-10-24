@@ -44,12 +44,11 @@ namespace SSD_CRUD_APP
         private void CheckForFile()
         {
             String currentDir = Directory.GetCurrentDirectory();
-
             var fileToFind = "UserDetails.csv";
-
             var result = Directory
                 .EnumerateFiles(currentDir, fileToFind, SearchOption.AllDirectories)
                 .FirstOrDefault();
+
             if (result != currentDir + "\\UserDetails.csv")
             {
                 File.Create(currentDir + "\\UserDetails.csv");

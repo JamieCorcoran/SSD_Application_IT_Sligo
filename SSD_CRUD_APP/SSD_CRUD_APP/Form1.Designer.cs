@@ -50,6 +50,7 @@
             // deleteBook
             // 
             this.deleteBook.BackColor = System.Drawing.Color.White;
+            this.deleteBook.FlatAppearance.BorderColor = System.Drawing.Color.White;
             this.deleteBook.FlatAppearance.MouseOverBackColor = System.Drawing.Color.LightSteelBlue;
             this.deleteBook.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.deleteBook.Font = new System.Drawing.Font("Arial Rounded MT Bold", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -65,6 +66,7 @@
             // updateBook
             // 
             this.updateBook.BackColor = System.Drawing.Color.White;
+            this.updateBook.FlatAppearance.BorderColor = System.Drawing.Color.White;
             this.updateBook.FlatAppearance.MouseOverBackColor = System.Drawing.Color.LightSteelBlue;
             this.updateBook.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.updateBook.Font = new System.Drawing.Font("Arial Rounded MT Bold", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -80,6 +82,7 @@
             // viewBooks
             // 
             this.viewBooks.BackColor = System.Drawing.Color.White;
+            this.viewBooks.FlatAppearance.BorderColor = System.Drawing.Color.White;
             this.viewBooks.FlatAppearance.MouseOverBackColor = System.Drawing.Color.LightSteelBlue;
             this.viewBooks.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.viewBooks.Font = new System.Drawing.Font("Arial Rounded MT Bold", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -95,6 +98,7 @@
             // addBook
             // 
             this.addBook.BackColor = System.Drawing.Color.White;
+            this.addBook.FlatAppearance.BorderColor = System.Drawing.Color.White;
             this.addBook.FlatAppearance.MouseOverBackColor = System.Drawing.Color.LightSteelBlue;
             this.addBook.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.addBook.Font = new System.Drawing.Font("Arial Rounded MT Bold", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
