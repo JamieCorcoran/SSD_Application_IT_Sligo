@@ -36,9 +36,9 @@
             this.datePublishedLabel = new System.Windows.Forms.Label();
             this.publisherTextBox = new System.Windows.Forms.TextBox();
             this.publisherLabel = new System.Windows.Forms.Label();
-            this.datePublishedTextBox = new System.Windows.Forms.TextBox();
             this.AuthorLabel = new System.Windows.Forms.Label();
             this.authorTextBox = new System.Windows.Forms.TextBox();
+            this.dateTimePicker1 = new System.Windows.Forms.DateTimePicker();
             this.SuspendLayout();
             // 
             // header
@@ -59,9 +59,9 @@
             this.cancelButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.cancelButton.Font = new System.Drawing.Font("Arial Rounded MT Bold", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.cancelButton.ForeColor = System.Drawing.Color.Black;
-            this.cancelButton.Location = new System.Drawing.Point(279, 346);
+            this.cancelButton.Location = new System.Drawing.Point(256, 327);
             this.cancelButton.Name = "cancelButton";
-            this.cancelButton.Size = new System.Drawing.Size(124, 35);
+            this.cancelButton.Size = new System.Drawing.Size(159, 35);
             this.cancelButton.TabIndex = 11;
             this.cancelButton.Text = "Cancel";
             this.cancelButton.UseVisualStyleBackColor = false;
@@ -74,9 +74,9 @@
             this.button1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.button1.Font = new System.Drawing.Font("Arial Rounded MT Bold", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.button1.ForeColor = System.Drawing.Color.Black;
-            this.button1.Location = new System.Drawing.Point(149, 346);
+            this.button1.Location = new System.Drawing.Point(91, 327);
             this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(124, 35);
+            this.button1.Size = new System.Drawing.Size(159, 35);
             this.button1.TabIndex = 10;
             this.button1.Text = "Add Book";
             this.button1.UseVisualStyleBackColor = false;
@@ -84,7 +84,7 @@
             // 
             // nameTextBox
             // 
-            this.nameTextBox.Font = new System.Drawing.Font("Arial Rounded MT Bold", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.nameTextBox.Font = new System.Drawing.Font("Arial", 12F);
             this.nameTextBox.Location = new System.Drawing.Point(170, 119);
             this.nameTextBox.Name = "nameTextBox";
             this.nameTextBox.Size = new System.Drawing.Size(222, 26);
@@ -114,7 +114,7 @@
             // 
             // publisherTextBox
             // 
-            this.publisherTextBox.Font = new System.Drawing.Font("Arial Rounded MT Bold", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.publisherTextBox.Font = new System.Drawing.Font("Arial", 12F);
             this.publisherTextBox.Location = new System.Drawing.Point(170, 203);
             this.publisherTextBox.Name = "publisherTextBox";
             this.publisherTextBox.Size = new System.Drawing.Size(222, 26);
@@ -131,14 +131,6 @@
             this.publisherLabel.TabIndex = 17;
             this.publisherLabel.Text = "Publisher:";
             // 
-            // datePublishedTextBox
-            // 
-            this.datePublishedTextBox.Font = new System.Drawing.Font("Arial Rounded MT Bold", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.datePublishedTextBox.Location = new System.Drawing.Point(170, 247);
-            this.datePublishedTextBox.Name = "datePublishedTextBox";
-            this.datePublishedTextBox.Size = new System.Drawing.Size(222, 26);
-            this.datePublishedTextBox.TabIndex = 16;
-            // 
             // AuthorLabel
             // 
             this.AuthorLabel.AutoSize = true;
@@ -152,22 +144,30 @@
             // 
             // authorTextBox
             // 
-            this.authorTextBox.Font = new System.Drawing.Font("Arial Rounded MT Bold", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.authorTextBox.Font = new System.Drawing.Font("Arial", 12F);
             this.authorTextBox.Location = new System.Drawing.Point(170, 162);
             this.authorTextBox.Name = "authorTextBox";
             this.authorTextBox.Size = new System.Drawing.Size(222, 26);
             this.authorTextBox.TabIndex = 18;
+            // 
+            // dateTimePicker1
+            // 
+            this.dateTimePicker1.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.dateTimePicker1.Location = new System.Drawing.Point(170, 248);
+            this.dateTimePicker1.Name = "dateTimePicker1";
+            this.dateTimePicker1.Size = new System.Drawing.Size(222, 26);
+            this.dateTimePicker1.TabIndex = 20;
             // 
             // AddBook
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.DodgerBlue;
-            this.ClientSize = new System.Drawing.Size(498, 450);
+            this.ClientSize = new System.Drawing.Size(498, 422);
+            this.Controls.Add(this.dateTimePicker1);
             this.Controls.Add(this.AuthorLabel);
             this.Controls.Add(this.authorTextBox);
             this.Controls.Add(this.publisherLabel);
-            this.Controls.Add(this.datePublishedTextBox);
             this.Controls.Add(this.datePublishedLabel);
             this.Controls.Add(this.publisherTextBox);
             this.Controls.Add(this.nameLabel);
@@ -192,8 +192,8 @@
         private System.Windows.Forms.Label datePublishedLabel;
         private System.Windows.Forms.TextBox publisherTextBox;
         private System.Windows.Forms.Label publisherLabel;
-        private System.Windows.Forms.TextBox datePublishedTextBox;
         private System.Windows.Forms.Label AuthorLabel;
         private System.Windows.Forms.TextBox authorTextBox;
+        private System.Windows.Forms.DateTimePicker dateTimePicker1;
     }
 }
