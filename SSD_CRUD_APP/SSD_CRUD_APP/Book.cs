@@ -10,18 +10,27 @@ namespace SSD_CRUD_APP
     {
         public Book()
         {
-            id = 0;
-            name = "";
-            author = "";
-            publisher = "";
-            datePublished = DateTime.MinValue;
-            daterimeInserted = DateTime.MinValue;
+            Id = 0;
+            Name = "";
+            Author = "";
+            Publisher = "";
+            DatePublished = DateTime.MinValue;
+            DatetimeInserted = DateTime.MinValue;
         }
-        int id { get; set; }
-        string name { get; set; }
-        string author { get; set; }
-        string publisher { get; set; }
-        DateTime datePublished { get; set; }
-        DateTime daterimeInserted { get; set; }
+        public Book(int id, string name, string author, string publisher, DateTime datePublished)
+        {
+            Id = Id;
+            Name = name;
+            Author = author;
+            Publisher = publisher;
+            DatePublished = datePublished;
+            DatetimeInserted = DateTime.Now;
+        }
+        public int Id { get; set; }
+        public string Name { get; set; }
+        public string Author { get; set; }
+        public string Publisher { get; set; }
+        public DateTime DatePublished { get; set; }
+        public DateTime DatetimeInserted { get; set; }
     }
 }

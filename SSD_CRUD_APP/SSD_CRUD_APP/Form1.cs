@@ -13,6 +13,7 @@ namespace SSD_CRUD_APP
 {
     public partial class Form1 : Form
     {
+        String _currentDir = Directory.GetCurrentDirectory();
         public Form1()
         {
             InitializeComponent();
@@ -33,8 +34,7 @@ namespace SSD_CRUD_APP
 
         private void viewBooks_Click(object sender, EventArgs e)
         {
-            ViewBooks viewBooksForm = new ViewBooks();
-            viewBooksForm.Show();
+            ReadInBooks();
         }
 
         private void deleteBook_Click(object sender, EventArgs e)
@@ -43,16 +43,54 @@ namespace SSD_CRUD_APP
         }
         private void CheckForFile()
         {
-            String currentDir = Directory.GetCurrentDirectory();
             var fileToFind = "UserDetails.csv";
             var result = Directory
-                .EnumerateFiles(currentDir, fileToFind, SearchOption.AllDirectories)
+                .EnumerateFiles(_currentDir, fileToFind, SearchOption.AllDirectories)
                 .FirstOrDefault();
 
-            if (result != currentDir + "\\UserDetails.csv")
+            if (result != _currentDir + "\\UserDetails.csv")
             {
-                File.Create(currentDir + "\\UserDetails.csv");
+                using (var myFile = File.Create(_currentDir + "\\UserDetails.csv"))
+                {
+                    myFile.Close();
+                }
             }
+        }
+        private void ReadInBooks()
+        {
+            int i = 1;
+            booksListView.Items.Clear();
+            try
+            {
+                using (var reader = new StreamReader(_currentDir + "\\UserDetails.csv"))
+                {
+                    while (!reader.EndOfStream)
+                    {
+                        var line = reader.ReadLine();
+                        var values = line.Split(',');
+                        foreach (var value in values)
+                        {
+                            booksListView.Items[i].Text = value;
+                            i++;
+                        }
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+            }
+        }
+        private void WriteToCSV()
+        {
+            using (StreamWriter file = new StreamWriter(_currentDir + "\\UserDetails.csv"))
+            {
+                file.WriteLine();
+            }
+        }
+        private void CreateBook()
+        {
+
         }
     }
 }

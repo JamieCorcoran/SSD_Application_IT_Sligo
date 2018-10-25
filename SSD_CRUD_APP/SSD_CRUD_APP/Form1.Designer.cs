@@ -34,6 +34,12 @@
             this.viewBooks = new System.Windows.Forms.Button();
             this.addBook = new System.Windows.Forms.Button();
             this.Title = new System.Windows.Forms.Label();
+            this.booksListView = new System.Windows.Forms.ListView();
+            this.idColumnn = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.nameColumnn = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.authorColumnn = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.publisherColumnn = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.datePublishedColumnn = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.SuspendLayout();
             // 
             // Heading
@@ -41,7 +47,7 @@
             this.Heading.AutoSize = true;
             this.Heading.Font = new System.Drawing.Font("Arial Rounded MT Bold", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Heading.ForeColor = System.Drawing.Color.White;
-            this.Heading.Location = new System.Drawing.Point(207, 104);
+            this.Heading.Location = new System.Drawing.Point(299, 80);
             this.Heading.Name = "Heading";
             this.Heading.Size = new System.Drawing.Size(163, 28);
             this.Heading.TabIndex = 11;
@@ -49,15 +55,18 @@
             // 
             // deleteBook
             // 
-            this.deleteBook.BackColor = System.Drawing.Color.White;
+            this.deleteBook.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.deleteBook.BackColor = System.Drawing.Color.LightGray;
+            this.deleteBook.Enabled = false;
             this.deleteBook.FlatAppearance.BorderColor = System.Drawing.Color.White;
             this.deleteBook.FlatAppearance.MouseOverBackColor = System.Drawing.Color.LightSteelBlue;
             this.deleteBook.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.deleteBook.Font = new System.Drawing.Font("Arial Rounded MT Bold", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.deleteBook.ForeColor = System.Drawing.Color.Black;
-            this.deleteBook.Location = new System.Drawing.Point(297, 232);
+            this.deleteBook.Location = new System.Drawing.Point(634, 167);
             this.deleteBook.Name = "deleteBook";
-            this.deleteBook.Size = new System.Drawing.Size(124, 78);
+            this.deleteBook.Size = new System.Drawing.Size(113, 37);
             this.deleteBook.TabIndex = 10;
             this.deleteBook.Text = "Delete Book";
             this.deleteBook.UseVisualStyleBackColor = false;
@@ -65,15 +74,18 @@
             // 
             // updateBook
             // 
-            this.updateBook.BackColor = System.Drawing.Color.White;
+            this.updateBook.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.updateBook.BackColor = System.Drawing.Color.LightGray;
+            this.updateBook.Enabled = false;
             this.updateBook.FlatAppearance.BorderColor = System.Drawing.Color.White;
             this.updateBook.FlatAppearance.MouseOverBackColor = System.Drawing.Color.LightSteelBlue;
             this.updateBook.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.updateBook.Font = new System.Drawing.Font("Arial Rounded MT Bold", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.updateBook.ForeColor = System.Drawing.Color.Black;
-            this.updateBook.Location = new System.Drawing.Point(297, 148);
+            this.updateBook.Location = new System.Drawing.Point(514, 167);
             this.updateBook.Name = "updateBook";
-            this.updateBook.Size = new System.Drawing.Size(124, 78);
+            this.updateBook.Size = new System.Drawing.Size(113, 37);
             this.updateBook.TabIndex = 9;
             this.updateBook.Text = "Update Book";
             this.updateBook.UseVisualStyleBackColor = false;
@@ -81,31 +93,35 @@
             // 
             // viewBooks
             // 
+            this.viewBooks.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.viewBooks.BackColor = System.Drawing.Color.White;
             this.viewBooks.FlatAppearance.BorderColor = System.Drawing.Color.White;
             this.viewBooks.FlatAppearance.MouseOverBackColor = System.Drawing.Color.LightSteelBlue;
             this.viewBooks.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.viewBooks.Font = new System.Drawing.Font("Arial Rounded MT Bold", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.viewBooks.ForeColor = System.Drawing.Color.Black;
-            this.viewBooks.Location = new System.Drawing.Point(167, 232);
+            this.viewBooks.Location = new System.Drawing.Point(12, 167);
             this.viewBooks.Name = "viewBooks";
-            this.viewBooks.Size = new System.Drawing.Size(124, 78);
+            this.viewBooks.Size = new System.Drawing.Size(113, 37);
             this.viewBooks.TabIndex = 8;
-            this.viewBooks.Text = "View Book";
+            this.viewBooks.Text = "View Books";
             this.viewBooks.UseVisualStyleBackColor = false;
             this.viewBooks.Click += new System.EventHandler(this.viewBooks_Click);
             // 
             // addBook
             // 
+            this.addBook.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.addBook.BackColor = System.Drawing.Color.White;
             this.addBook.FlatAppearance.BorderColor = System.Drawing.Color.White;
             this.addBook.FlatAppearance.MouseOverBackColor = System.Drawing.Color.LightSteelBlue;
             this.addBook.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.addBook.Font = new System.Drawing.Font("Arial Rounded MT Bold", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.addBook.ForeColor = System.Drawing.Color.Black;
-            this.addBook.Location = new System.Drawing.Point(167, 148);
+            this.addBook.Location = new System.Drawing.Point(394, 167);
             this.addBook.Name = "addBook";
-            this.addBook.Size = new System.Drawing.Size(124, 78);
+            this.addBook.Size = new System.Drawing.Size(113, 37);
             this.addBook.TabIndex = 7;
             this.addBook.Text = "Add Book";
             this.addBook.UseVisualStyleBackColor = false;
@@ -116,18 +132,61 @@
             this.Title.AutoSize = true;
             this.Title.Font = new System.Drawing.Font("Arial Rounded MT Bold", 21.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Title.ForeColor = System.Drawing.Color.White;
-            this.Title.Location = new System.Drawing.Point(206, 56);
+            this.Title.Location = new System.Drawing.Point(298, 32);
             this.Title.Name = "Title";
             this.Title.Size = new System.Drawing.Size(166, 33);
             this.Title.TabIndex = 6;
             this.Title.Text = "Main Menu";
+            // 
+            // booksListView
+            // 
+            this.booksListView.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.booksListView.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.idColumnn,
+            this.nameColumnn,
+            this.authorColumnn,
+            this.publisherColumnn,
+            this.datePublishedColumnn});
+            this.booksListView.Location = new System.Drawing.Point(12, 210);
+            this.booksListView.Name = "booksListView";
+            this.booksListView.Size = new System.Drawing.Size(735, 254);
+            this.booksListView.TabIndex = 12;
+            this.booksListView.UseCompatibleStateImageBehavior = false;
+            this.booksListView.View = System.Windows.Forms.View.Details;
+            // 
+            // idColumnn
+            // 
+            this.idColumnn.Text = "Id";
+            this.idColumnn.Width = 29;
+            // 
+            // nameColumnn
+            // 
+            this.nameColumnn.Text = "Name";
+            this.nameColumnn.Width = 209;
+            // 
+            // authorColumnn
+            // 
+            this.authorColumnn.Text = "Author";
+            this.authorColumnn.Width = 148;
+            // 
+            // publisherColumnn
+            // 
+            this.publisherColumnn.Text = "Publisher";
+            this.publisherColumnn.Width = 207;
+            // 
+            // datePublishedColumnn
+            // 
+            this.datePublishedColumnn.Text = "Date Published";
+            this.datePublishedColumnn.Width = 131;
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.DodgerBlue;
-            this.ClientSize = new System.Drawing.Size(594, 401);
+            this.ClientSize = new System.Drawing.Size(759, 476);
+            this.Controls.Add(this.booksListView);
             this.Controls.Add(this.Heading);
             this.Controls.Add(this.deleteBook);
             this.Controls.Add(this.updateBook);
@@ -149,6 +208,12 @@
         private System.Windows.Forms.Button viewBooks;
         private System.Windows.Forms.Button addBook;
         private System.Windows.Forms.Label Title;
+        private System.Windows.Forms.ListView booksListView;
+        private System.Windows.Forms.ColumnHeader idColumnn;
+        private System.Windows.Forms.ColumnHeader nameColumnn;
+        private System.Windows.Forms.ColumnHeader authorColumnn;
+        private System.Windows.Forms.ColumnHeader publisherColumnn;
+        private System.Windows.Forms.ColumnHeader datePublishedColumnn;
     }
 }
 
