@@ -38,7 +38,7 @@
             this.publisherLabel = new System.Windows.Forms.Label();
             this.AuthorLabel = new System.Windows.Forms.Label();
             this.authorTextBox = new System.Windows.Forms.TextBox();
-            this.dateTimePicker1 = new System.Windows.Forms.DateTimePicker();
+            this.dateTimePickerPublished = new System.Windows.Forms.DateTimePicker();
             this.SuspendLayout();
             // 
             // header
@@ -62,7 +62,7 @@
             this.cancelButton.Location = new System.Drawing.Point(244, 334);
             this.cancelButton.Name = "cancelButton";
             this.cancelButton.Size = new System.Drawing.Size(159, 35);
-            this.cancelButton.TabIndex = 11;
+            this.cancelButton.TabIndex = 6;
             this.cancelButton.Text = "Cancel";
             this.cancelButton.UseVisualStyleBackColor = false;
             this.cancelButton.Click += new System.EventHandler(this.cancelButton_Click);
@@ -78,7 +78,7 @@
             this.addButton.Location = new System.Drawing.Point(79, 334);
             this.addButton.Name = "addButton";
             this.addButton.Size = new System.Drawing.Size(159, 35);
-            this.addButton.TabIndex = 10;
+            this.addButton.TabIndex = 5;
             this.addButton.Text = "Add Book";
             this.addButton.UseVisualStyleBackColor = false;
             this.addButton.Click += new System.EventHandler(this.addButton_Click);
@@ -89,7 +89,7 @@
             this.nameTextBox.Location = new System.Drawing.Point(181, 127);
             this.nameTextBox.Name = "nameTextBox";
             this.nameTextBox.Size = new System.Drawing.Size(222, 26);
-            this.nameTextBox.TabIndex = 12;
+            this.nameTextBox.TabIndex = 1;
             // 
             // nameLabel
             // 
@@ -119,7 +119,7 @@
             this.publisherTextBox.Location = new System.Drawing.Point(181, 211);
             this.publisherTextBox.Name = "publisherTextBox";
             this.publisherTextBox.Size = new System.Drawing.Size(222, 26);
-            this.publisherTextBox.TabIndex = 14;
+            this.publisherTextBox.TabIndex = 3;
             // 
             // publisherLabel
             // 
@@ -149,15 +149,15 @@
             this.authorTextBox.Location = new System.Drawing.Point(181, 170);
             this.authorTextBox.Name = "authorTextBox";
             this.authorTextBox.Size = new System.Drawing.Size(222, 26);
-            this.authorTextBox.TabIndex = 18;
+            this.authorTextBox.TabIndex = 2;
             // 
-            // dateTimePicker1
+            // dateTimePickerPublished
             // 
-            this.dateTimePicker1.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.dateTimePicker1.Location = new System.Drawing.Point(181, 256);
-            this.dateTimePicker1.Name = "dateTimePicker1";
-            this.dateTimePicker1.Size = new System.Drawing.Size(222, 26);
-            this.dateTimePicker1.TabIndex = 20;
+            this.dateTimePickerPublished.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.dateTimePickerPublished.Location = new System.Drawing.Point(181, 256);
+            this.dateTimePickerPublished.Name = "dateTimePickerPublished";
+            this.dateTimePickerPublished.Size = new System.Drawing.Size(222, 26);
+            this.dateTimePickerPublished.TabIndex = 4;
             // 
             // AddBook
             // 
@@ -165,7 +165,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.DodgerBlue;
             this.ClientSize = new System.Drawing.Size(464, 421);
-            this.Controls.Add(this.dateTimePicker1);
+            this.Controls.Add(this.dateTimePickerPublished);
             this.Controls.Add(this.AuthorLabel);
             this.Controls.Add(this.authorTextBox);
             this.Controls.Add(this.publisherLabel);
@@ -195,6 +195,6 @@
         private System.Windows.Forms.Label publisherLabel;
         private System.Windows.Forms.Label AuthorLabel;
         private System.Windows.Forms.TextBox authorTextBox;
-        private System.Windows.Forms.DateTimePicker dateTimePicker1;
+        private System.Windows.Forms.DateTimePicker dateTimePickerPublished;
     }
 }
