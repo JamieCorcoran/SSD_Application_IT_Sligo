@@ -58,7 +58,6 @@ namespace SSD_CRUD_APP
         }
         private void ReadInBooks()
         {
-            int i = 1;
             booksListView.Items.Clear();
             try
             {
@@ -68,11 +67,8 @@ namespace SSD_CRUD_APP
                     {
                         var line = reader.ReadLine();
                         var values = line.Split(',');
-                        foreach (var value in values)
-                        {
-                            booksListView.Items[i].Text = value;
-                            i++;
-                        }
+                        ListViewItem  itm = new ListViewItem(values);
+                        booksListView.Items.Add(itm);
                     }
                 }
             }
