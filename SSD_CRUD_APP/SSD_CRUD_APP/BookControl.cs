@@ -11,10 +11,10 @@ using System.Windows.Forms;
 
 namespace SSD_CRUD_APP
 {
-    public partial class Form1 : Form
+    public partial class BookControl : Form
     {
         String _currentDir = Directory.GetCurrentDirectory();
-        public Form1()
+        public BookControl()
         {
             InitializeComponent();
             CheckForFile();
@@ -22,14 +22,19 @@ namespace SSD_CRUD_APP
 
         private void addBook_Click(object sender, EventArgs e)
         {
-            AddBook addBookForm = new AddBook();
+            AddBook addBookForm = new AddBook(this);
             addBookForm.Show();
         }
 
         private void updateBook_Click(object sender, EventArgs e)
         {
-            UpdateBook updateBookForm = new UpdateBook();
-            updateBookForm.Show();
+            if (booksListView.SelectedItems.Count == 1)
+            {
+                UpdateBook updateBookForm = new UpdateBook(booksListView.SelectedItems[0]);
+                updateBookForm.Show();
+            }
+            else
+                MessageBox.Show("Invaild Please select one item", "Error", MessageBoxButtons.OK);
         }
 
         private void viewBooks_Click(object sender, EventArgs e)
@@ -39,7 +44,7 @@ namespace SSD_CRUD_APP
 
         private void deleteBook_Click(object sender, EventArgs e)
         {
-
+            DeleteBook();
         }
         private void CheckForFile()
         {
@@ -56,7 +61,7 @@ namespace SSD_CRUD_APP
                 }
             }
         }
-        private void ReadInBooks()
+        public void ReadInBooks()
         {
             booksListView.Items.Clear();
             try
@@ -84,9 +89,34 @@ namespace SSD_CRUD_APP
                 file.WriteLine();
             }
         }
-        private void CreateBook()
+        private void DeleteBook()
         {
-
+            //if(booksListView. == true)
+            using (var reader = new StreamReader(_currentDir + "\\UserDetails.csv"))
+            {
+                while (!reader.EndOfStream)
+                {
+                    var line = reader.ReadLine();
+                    var values = line.Split(',');
+                    ListViewItem itm = new ListViewItem(values);
+                    
+                    //if (itm = )
+                    booksListView.Items.Add(itm);
+                }
+            }
+        }
+        private void UpdateBook()
+        {
+            using (var reader = new StreamReader(_currentDir + "\\UserDetails.csv"))
+            {
+                while (!reader.EndOfStream)
+                {
+                    var line = reader.ReadLine();
+                    var values = line.Split(',');
+                    ListViewItem itm = new ListViewItem(values);
+                    booksListView.Items.Add(itm);
+                }
+            }
         }
     }
 }

@@ -14,9 +14,15 @@ namespace SSD_CRUD_APP
     public partial class AddBook : Form
     {
         String _currentDir = Directory.GetCurrentDirectory();
+        BookControl _bookControl = new BookControl();
         public AddBook()
         {
             InitializeComponent();
+        }
+        public AddBook(BookControl bookCtrl)
+        {
+            InitializeComponent();
+            _bookControl = bookCtrl;
         }
 
         private void cancelButton_Click(object sender, EventArgs e)
@@ -30,15 +36,17 @@ namespace SSD_CRUD_APP
         }
         private void CreateBook()
         {
-            Book newBook = new Book(GetIdValue(), nameTextBox.Text, authorTextBox.Text, publisherTextBox.Text, dateTimePickerPublished.Value);
+            int id = GetIdValue();
+            Book newBook = new Book(id, nameTextBox.Text, authorTextBox.Text, publisherTextBox.Text, dateTimePickerPublished.Value);
             if (CheckForNullorEmpty(newBook))
             {
-                using (var w = new StreamWriter(_currentDir + "\\UserDetails.csv"))
+                using (var w = new StreamWriter(_currentDir + "\\UserDetails.csv", append: true))
                 {
                     var line = string.Format(newBook.Id.ToString() + "," + newBook.Name + "," + newBook.Author + "," + newBook.Publisher + "," + newBook.DatePublished.ToString() + "," + newBook.DatetimeInserted.ToString());
                     w.WriteLine(line);
                     w.Flush();
                     w.Close();
+                    _bookControl.ReadInBooks();
                     this.Close();
                 }
             }
@@ -47,6 +55,7 @@ namespace SSD_CRUD_APP
                 MessageBox.Show("Invaild Please make sure all fields are filled", "Error", MessageBoxButtons.OK);
             }
         }
+
         private bool CheckForNullorEmpty(Book newBook)
         {
             if (string.IsNullOrEmpty(newBook.Id.ToString()))

@@ -19,7 +19,7 @@ namespace SSD_CRUD_APP
         }
         public Book(int id, string name, string author, string publisher, DateTime datePublished)
         {
-            Id = Id;
+            Id = id;
             Name = name;
             Author = author;
             Publisher = publisher;

@@ -12,9 +12,16 @@ namespace SSD_CRUD_APP
 {
     public partial class UpdateBook : Form
     {
+        string _itemId;
         public UpdateBook()
         {
             InitializeComponent();
+        }
+        public UpdateBook(ListViewItem id)
+        {
+            InitializeComponent();
+            _itemId = id.Text;
+            PopulateFields();
         }
 
         private void cancelButton_Click(object sender, EventArgs e)
@@ -23,6 +30,10 @@ namespace SSD_CRUD_APP
         }
 
         private void updateButton_Click(object sender, EventArgs e)
+        {
+
+        }
+        private void PopulateFields()
         {
 
         }

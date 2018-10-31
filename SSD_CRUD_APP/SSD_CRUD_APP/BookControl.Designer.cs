@@ -1,6 +1,6 @@
 ﻿namespace SSD_CRUD_APP
 {
-    partial class Form1
+    partial class BookControl
     {
         /// <summary>
         /// Required designer variable.
@@ -47,9 +47,10 @@
             this.Heading.AutoSize = true;
             this.Heading.Font = new System.Drawing.Font("Arial Rounded MT Bold", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Heading.ForeColor = System.Drawing.Color.White;
-            this.Heading.Location = new System.Drawing.Point(299, 80);
+            this.Heading.Location = new System.Drawing.Point(399, 98);
+            this.Heading.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.Heading.Name = "Heading";
-            this.Heading.Size = new System.Drawing.Size(163, 28);
+            this.Heading.Size = new System.Drawing.Size(206, 34);
             this.Heading.TabIndex = 11;
             this.Heading.Text = "Book Control";
             // 
@@ -64,9 +65,10 @@
             this.deleteBook.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.deleteBook.Font = new System.Drawing.Font("Arial Rounded MT Bold", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.deleteBook.ForeColor = System.Drawing.Color.Black;
-            this.deleteBook.Location = new System.Drawing.Point(634, 167);
+            this.deleteBook.Location = new System.Drawing.Point(845, 206);
+            this.deleteBook.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.deleteBook.Name = "deleteBook";
-            this.deleteBook.Size = new System.Drawing.Size(113, 37);
+            this.deleteBook.Size = new System.Drawing.Size(151, 46);
             this.deleteBook.TabIndex = 10;
             this.deleteBook.Text = "Delete Book";
             this.deleteBook.UseVisualStyleBackColor = false;
@@ -76,16 +78,16 @@
             // 
             this.updateBook.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.updateBook.BackColor = System.Drawing.Color.LightGray;
-            this.updateBook.Enabled = false;
+            this.updateBook.BackColor = System.Drawing.Color.White;
             this.updateBook.FlatAppearance.BorderColor = System.Drawing.Color.White;
             this.updateBook.FlatAppearance.MouseOverBackColor = System.Drawing.Color.LightSteelBlue;
             this.updateBook.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.updateBook.Font = new System.Drawing.Font("Arial Rounded MT Bold", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.updateBook.ForeColor = System.Drawing.Color.Black;
-            this.updateBook.Location = new System.Drawing.Point(514, 167);
+            this.updateBook.Location = new System.Drawing.Point(685, 206);
+            this.updateBook.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.updateBook.Name = "updateBook";
-            this.updateBook.Size = new System.Drawing.Size(113, 37);
+            this.updateBook.Size = new System.Drawing.Size(151, 46);
             this.updateBook.TabIndex = 9;
             this.updateBook.Text = "Update Book";
             this.updateBook.UseVisualStyleBackColor = false;
@@ -101,9 +103,10 @@
             this.viewBooks.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.viewBooks.Font = new System.Drawing.Font("Arial Rounded MT Bold", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.viewBooks.ForeColor = System.Drawing.Color.Black;
-            this.viewBooks.Location = new System.Drawing.Point(12, 167);
+            this.viewBooks.Location = new System.Drawing.Point(16, 206);
+            this.viewBooks.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.viewBooks.Name = "viewBooks";
-            this.viewBooks.Size = new System.Drawing.Size(113, 37);
+            this.viewBooks.Size = new System.Drawing.Size(151, 46);
             this.viewBooks.TabIndex = 8;
             this.viewBooks.Text = "View Books";
             this.viewBooks.UseVisualStyleBackColor = false;
@@ -119,9 +122,10 @@
             this.addBook.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.addBook.Font = new System.Drawing.Font("Arial Rounded MT Bold", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.addBook.ForeColor = System.Drawing.Color.Black;
-            this.addBook.Location = new System.Drawing.Point(394, 167);
+            this.addBook.Location = new System.Drawing.Point(525, 206);
+            this.addBook.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.addBook.Name = "addBook";
-            this.addBook.Size = new System.Drawing.Size(113, 37);
+            this.addBook.Size = new System.Drawing.Size(151, 46);
             this.addBook.TabIndex = 7;
             this.addBook.Text = "Add Book";
             this.addBook.UseVisualStyleBackColor = false;
@@ -132,9 +136,10 @@
             this.Title.AutoSize = true;
             this.Title.Font = new System.Drawing.Font("Arial Rounded MT Bold", 21.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Title.ForeColor = System.Drawing.Color.White;
-            this.Title.Location = new System.Drawing.Point(298, 32);
+            this.Title.Location = new System.Drawing.Point(397, 39);
+            this.Title.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.Title.Name = "Title";
-            this.Title.Size = new System.Drawing.Size(166, 33);
+            this.Title.Size = new System.Drawing.Size(210, 43);
             this.Title.TabIndex = 6;
             this.Title.Text = "Main Menu";
             // 
@@ -148,9 +153,11 @@
             this.authorColumnn,
             this.publisherColumnn,
             this.datePublishedColumnn});
-            this.booksListView.Location = new System.Drawing.Point(12, 210);
+            this.booksListView.FullRowSelect = true;
+            this.booksListView.Location = new System.Drawing.Point(16, 258);
+            this.booksListView.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.booksListView.Name = "booksListView";
-            this.booksListView.Size = new System.Drawing.Size(735, 254);
+            this.booksListView.Size = new System.Drawing.Size(979, 312);
             this.booksListView.TabIndex = 12;
             this.booksListView.UseCompatibleStateImageBehavior = false;
             this.booksListView.View = System.Windows.Forms.View.Details;
@@ -180,12 +187,12 @@
             this.datePublishedColumnn.Text = "Date Published";
             this.datePublishedColumnn.Width = 131;
             // 
-            // Form1
+            // BookControl
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.DodgerBlue;
-            this.ClientSize = new System.Drawing.Size(759, 476);
+            this.ClientSize = new System.Drawing.Size(1012, 586);
             this.Controls.Add(this.booksListView);
             this.Controls.Add(this.Heading);
             this.Controls.Add(this.deleteBook);
@@ -193,7 +200,8 @@
             this.Controls.Add(this.viewBooks);
             this.Controls.Add(this.addBook);
             this.Controls.Add(this.Title);
-            this.Name = "Form1";
+            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.Name = "BookControl";
             this.Text = "Form1";
             this.ResumeLayout(false);
             this.PerformLayout();
