@@ -73,7 +73,7 @@ namespace SSD_CRUD_APP
         }
         private int GetIdValue()
         {
-            int count = 1;
+            int max = 1;
             try
             {
                 using (var reader = new StreamReader(_currentDir + "\\UserDetails.csv"))
@@ -81,9 +81,13 @@ namespace SSD_CRUD_APP
                     while (!reader.EndOfStream)
                     {
                         string line = reader.ReadLine();
+                        var values = line.Split(',');
                         if (string.IsNullOrEmpty(line))
                             break;
-                        count++;
+                        if (int.Parse(values[0]) >= max)
+                        {
+                            max = int.Parse(values[0]) + 1;
+                        }
                     }
                 }
             }
@@ -91,7 +95,7 @@ namespace SSD_CRUD_APP
             {
                 Console.WriteLine(e);
             }
-            return count;
+            return max;
         }
     }
 }

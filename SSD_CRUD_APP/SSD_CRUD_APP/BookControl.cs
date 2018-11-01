@@ -30,7 +30,7 @@ namespace SSD_CRUD_APP
         {
             if (booksListView.SelectedItems.Count == 1)
             {
-                UpdateBook updateBookForm = new UpdateBook(booksListView.SelectedItems[0]);
+                UpdateBook updateBookForm = new UpdateBook(booksListView.SelectedItems[0], this);
                 updateBookForm.Show();
             }
             else
@@ -44,7 +44,12 @@ namespace SSD_CRUD_APP
 
         private void deleteBook_Click(object sender, EventArgs e)
         {
-            DeleteBook();
+            if (booksListView.SelectedItems.Count == 1)
+            {
+                DeleteBook();
+            }
+            else
+                MessageBox.Show("Invaild Please select one item", "Error", MessageBoxButtons.OK);
         }
         private void CheckForFile()
         {
@@ -91,19 +96,43 @@ namespace SSD_CRUD_APP
         }
         private void DeleteBook()
         {
-            //if(booksListView. == true)
-            using (var reader = new StreamReader(_currentDir + "\\UserDetails.csv"))
+            int id = int.Parse(booksListView.SelectedItems[0].SubItems[0].Text);
+            List<String> lines = new List<String>();
+            List<string> list = new List<string>();
+            using (StreamReader reader = new StreamReader(_currentDir + "\\UserDetails.csv"))
+            {
+                String line;
+                while ((line = reader.ReadLine()) != null)
+                {
+                    if (line.Contains(","))
+                    {
+                        String[] split = line.Split(',');
+                        if (split[0].Contains(booksListView.SelectedItems[0].SubItems[0].Text))
+                            line = "";
+                    }
+                    lines.Add(line);
+                }
+            }
+            using (StreamWriter writer = new StreamWriter(_currentDir + "\\UserDetails.csv", false))
+            {
+                foreach (String line in lines)
+                    writer.WriteLine(line);
+            }
+            using (StreamReader reader = new StreamReader(_currentDir + "\\UserDetails.csv"))
             {
                 while (!reader.EndOfStream)
                 {
                     var line = reader.ReadLine();
-                    var values = line.Split(',');
-                    ListViewItem itm = new ListViewItem(values);
-                    
-                    //if (itm = )
-                    booksListView.Items.Add(itm);
+                    if (!string.IsNullOrEmpty(line))
+                        list.Add(line);
                 }
             }
+            using (StreamWriter writer = new StreamWriter(_currentDir + "\\UserDetails.csv", false))
+            {
+                foreach (String line in list)
+                    writer.WriteLine(line);
+            }
+            ReadInBooks();
         }
         private void UpdateBook()
         {

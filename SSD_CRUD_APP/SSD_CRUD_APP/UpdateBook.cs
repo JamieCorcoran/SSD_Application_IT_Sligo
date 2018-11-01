@@ -20,9 +20,10 @@ namespace SSD_CRUD_APP
         {
             InitializeComponent();
         }
-        public UpdateBook(ListViewItem item)
+        public UpdateBook(ListViewItem item, BookControl bookCtrl)
         {
             InitializeComponent();
+            _bookControl = bookCtrl;
             _itemId = item;
             PopulateFields();
         }
@@ -38,19 +39,32 @@ namespace SSD_CRUD_APP
         }
         private void UpdateBookChanged()
         {
-            int id = GetIdValue();
+            int id = int.Parse(_itemId.SubItems[0].Text); 
+            List<String> lines = new List<String>();
             Book newBook = new Book(id, nameTextBox.Text, authorTextBox.Text, publisherTextBox.Text, datePublishedPicker.Value);
             if (CheckForNullorEmpty(newBook))
             {
-                using (var w = new StreamWriter(_currentDir + "\\UserDetails.csv", append: true))
+                using (StreamReader reader = new StreamReader(_currentDir + "\\UserDetails.csv"))
                 {
-                    var line = string.Format(newBook.Id.ToString() + "," + newBook.Name + "," + newBook.Author + "," + newBook.Publisher + "," + newBook.DatePublished.ToString() + "," + newBook.DatetimeInserted.ToString());
-                    w.WriteLine(line);
-                    w.Flush();
-                    w.Close();
-                    _bookControl.ReadInBooks();
-                    this.Close();
+                    String line;           
+                    while ((line = reader.ReadLine()) != null)
+                    {
+                        if (line.Contains(","))
+                        {
+                            String[] split = line.Split(',');
+                            if (split[0].Contains(_itemId.SubItems[0].Text))
+                                line = string.Format(newBook.Id.ToString() + "," + newBook.Name + "," + newBook.Author + "," + newBook.Publisher + "," + newBook.DatePublished.ToString() + "," + newBook.DatetimeInserted.ToString());
+                        }
+                        lines.Add(line);
+                    }
                 }
+                using (StreamWriter writer = new StreamWriter(_currentDir + "\\UserDetails.csv", false))
+                {
+                    foreach (String line in lines)
+                        writer.WriteLine(line);
+                }
+                _bookControl.ReadInBooks();
+                this.Close();
             }
             else
             {
@@ -78,32 +92,6 @@ namespace SSD_CRUD_APP
                 return false;
             else
                 return true;
-        }
-        private int GetIdValue()
-        {
-            int count = 1;
-            try
-            {
-                string oldId = _itemId.SubItems[0].Text;
-                using (var reader = new StreamReader(_currentDir + "\\UserDetails.csv"))
-                {
-                    while (!reader.EndOfStream)
-                    {
-                        string line = reader.ReadLine();
-                        var id = line.Split(',');
-                        if (id[0] == oldId)
-                            return count;
-                        if (string.IsNullOrEmpty(line))
-                            break;
-                        count++;
-                    }
-                }
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine(e);
-            }
-            return count;
         }
     }
 }
