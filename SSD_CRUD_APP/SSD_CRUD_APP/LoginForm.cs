@@ -42,14 +42,10 @@ namespace SSD_CRUD_APP
         }
         private void AddLogin()
         {
-            using (var w = new StreamWriter(_currentDir + "\\LoginDetails.csv", append: true))
-            {
-                var line = string.Format("Admin" + "," + "password");
-                w.WriteLine(line);
-                w.Flush();
-                w.Close();
-                this.Close();
-            }
+            this.Hide();
+            AddUser addUser = new AddUser();
+            addUser.Show();
+            addUser.BringToFront();
         }
         private void ValidateLoginDetails()
         {

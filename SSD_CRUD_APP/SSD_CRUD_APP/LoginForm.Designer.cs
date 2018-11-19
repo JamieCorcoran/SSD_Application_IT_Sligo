@@ -1,4 +1,6 @@
-﻿namespace SSD_CRUD_APP
+﻿using System.Windows.Forms;
+
+namespace SSD_CRUD_APP
 {
     partial class LoginForm
     {
@@ -129,6 +131,7 @@
             // 
             // LoginForm
             // 
+            //this.OnLoad += new (Form1_FormClosing);
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.DodgerBlue;
