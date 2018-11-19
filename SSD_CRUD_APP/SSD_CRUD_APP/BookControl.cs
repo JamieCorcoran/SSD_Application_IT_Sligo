@@ -18,6 +18,7 @@ namespace SSD_CRUD_APP
         {
             InitializeComponent();
             CheckForFile();
+            this.FormClosing += Form1_FormClosing;
         }
 
         private void addBook_Click(object sender, EventArgs e)
@@ -146,6 +147,10 @@ namespace SSD_CRUD_APP
                     booksListView.Items.Add(itm);
                 }
             }
+        }
+        private void Form1_FormClosing(Object sender, FormClosingEventArgs e)
+        {
+            Application.Exit();
         }
     }
 }

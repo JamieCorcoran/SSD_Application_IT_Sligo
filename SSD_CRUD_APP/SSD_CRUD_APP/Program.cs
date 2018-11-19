@@ -16,7 +16,7 @@ namespace SSD_CRUD_APP
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new BookControl());
+            Application.Run(new LoginForm());
         }
     }
 }
