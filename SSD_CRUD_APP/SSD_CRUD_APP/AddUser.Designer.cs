@@ -1,4 +1,6 @@
-﻿namespace SSD_CRUD_APP
+﻿using System;
+
+namespace SSD_CRUD_APP
 {
     partial class AddUser
     {
@@ -11,6 +13,7 @@
         /// Clean up any resources being used.
         /// </summary>
         /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
+        /// 
         protected override void Dispose(bool disposing)
         {
             if (disposing && (components != null))
@@ -47,12 +50,14 @@
             this.exitButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.exitButton.Font = new System.Drawing.Font("Arial Rounded MT Bold", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.exitButton.ForeColor = System.Drawing.Color.Black;
-            this.exitButton.Location = new System.Drawing.Point(222, 278);
+            this.exitButton.Location = new System.Drawing.Point(296, 342);
+            this.exitButton.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.exitButton.Name = "exitButton";
-            this.exitButton.Size = new System.Drawing.Size(113, 37);
+            this.exitButton.Size = new System.Drawing.Size(151, 46);
             this.exitButton.TabIndex = 20;
             this.exitButton.Text = "Exit";
             this.exitButton.UseVisualStyleBackColor = false;
+            this.exitButton.Click += new System.EventHandler(this.exitButton_Click);
             // 
             // AddButton
             // 
@@ -64,9 +69,10 @@
             this.AddButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.AddButton.Font = new System.Drawing.Font("Arial Rounded MT Bold", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.AddButton.ForeColor = System.Drawing.Color.Black;
-            this.AddButton.Location = new System.Drawing.Point(102, 278);
+            this.AddButton.Location = new System.Drawing.Point(136, 342);
+            this.AddButton.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.AddButton.Name = "AddButton";
-            this.AddButton.Size = new System.Drawing.Size(113, 37);
+            this.AddButton.Size = new System.Drawing.Size(151, 46);
             this.AddButton.TabIndex = 19;
             this.AddButton.Text = "Add User";
             this.AddButton.UseVisualStyleBackColor = false;
@@ -75,20 +81,20 @@
             // passwordTextBox
             // 
             this.passwordTextBox.Font = new System.Drawing.Font("Arial Rounded MT Bold", 12F);
-            this.passwordTextBox.Location = new System.Drawing.Point(135, 229);
-            this.passwordTextBox.Margin = new System.Windows.Forms.Padding(2);
+            this.passwordTextBox.Location = new System.Drawing.Point(180, 282);
+            this.passwordTextBox.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.passwordTextBox.Name = "passwordTextBox";
             this.passwordTextBox.PasswordChar = '*';
-            this.passwordTextBox.Size = new System.Drawing.Size(174, 26);
+            this.passwordTextBox.Size = new System.Drawing.Size(231, 31);
             this.passwordTextBox.TabIndex = 18;
             // 
             // usernameTextBox
             // 
             this.usernameTextBox.Font = new System.Drawing.Font("Arial Rounded MT Bold", 12F);
-            this.usernameTextBox.Location = new System.Drawing.Point(135, 146);
-            this.usernameTextBox.Margin = new System.Windows.Forms.Padding(2);
+            this.usernameTextBox.Location = new System.Drawing.Point(180, 180);
+            this.usernameTextBox.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.usernameTextBox.Name = "usernameTextBox";
-            this.usernameTextBox.Size = new System.Drawing.Size(174, 26);
+            this.usernameTextBox.Size = new System.Drawing.Size(231, 31);
             this.usernameTextBox.TabIndex = 17;
             // 
             // passwordLabel
@@ -96,10 +102,9 @@
             this.passwordLabel.AutoSize = true;
             this.passwordLabel.Font = new System.Drawing.Font("Arial Rounded MT Bold", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.passwordLabel.ForeColor = System.Drawing.Color.White;
-            this.passwordLabel.Location = new System.Drawing.Point(132, 208);
-            this.passwordLabel.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.passwordLabel.Location = new System.Drawing.Point(176, 256);
             this.passwordLabel.Name = "passwordLabel";
-            this.passwordLabel.Size = new System.Drawing.Size(87, 18);
+            this.passwordLabel.Size = new System.Drawing.Size(107, 23);
             this.passwordLabel.TabIndex = 16;
             this.passwordLabel.Text = "Password";
             // 
@@ -108,10 +113,9 @@
             this.usernameLabel.AutoSize = true;
             this.usernameLabel.Font = new System.Drawing.Font("Arial Rounded MT Bold", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.usernameLabel.ForeColor = System.Drawing.Color.White;
-            this.usernameLabel.Location = new System.Drawing.Point(132, 125);
-            this.usernameLabel.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.usernameLabel.Location = new System.Drawing.Point(176, 154);
             this.usernameLabel.Name = "usernameLabel";
-            this.usernameLabel.Size = new System.Drawing.Size(90, 18);
+            this.usernameLabel.Size = new System.Drawing.Size(111, 23);
             this.usernameLabel.TabIndex = 15;
             this.usernameLabel.Text = "Username";
             // 
@@ -120,18 +124,19 @@
             this.Title.AutoSize = true;
             this.Title.Font = new System.Drawing.Font("Arial Rounded MT Bold", 21.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Title.ForeColor = System.Drawing.Color.White;
-            this.Title.Location = new System.Drawing.Point(146, 53);
+            this.Title.Location = new System.Drawing.Point(195, 65);
+            this.Title.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.Title.Name = "Title";
-            this.Title.Size = new System.Drawing.Size(147, 33);
+            this.Title.Size = new System.Drawing.Size(187, 43);
             this.Title.TabIndex = 14;
             this.Title.Text = "Add User";
             // 
             // AddUser
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.DodgerBlue;
-            this.ClientSize = new System.Drawing.Size(436, 368);
+            this.ClientSize = new System.Drawing.Size(581, 453);
             this.Controls.Add(this.exitButton);
             this.Controls.Add(this.AddButton);
             this.Controls.Add(this.passwordTextBox);
@@ -139,6 +144,7 @@
             this.Controls.Add(this.passwordLabel);
             this.Controls.Add(this.usernameLabel);
             this.Controls.Add(this.Title);
+            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.Name = "AddUser";
             this.Text = "AddUser";
             this.ResumeLayout(false);

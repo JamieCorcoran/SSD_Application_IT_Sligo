@@ -14,6 +14,7 @@ namespace SSD_CRUD_APP
     public partial class AddUser : Form
     {
         String _currentDir = Directory.GetCurrentDirectory();
+
         public AddUser()
         {
             InitializeComponent();
@@ -33,7 +34,7 @@ namespace SSD_CRUD_APP
                     w.WriteLine(line);
                     w.Flush();
                     w.Close();
-                    this.Close();
+                    Application.Restart();
                 }
             }
             else
@@ -47,6 +48,12 @@ namespace SSD_CRUD_APP
                 return false;
             else
                 return true;
+        }
+
+        private void exitButton_Click(object sender, EventArgs e)
+        {
+            File.Delete(_currentDir + "\\LoginDetails.csv");
+            this.Close();
         }
     }
 }
