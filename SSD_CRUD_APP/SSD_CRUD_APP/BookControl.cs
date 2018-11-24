@@ -13,7 +13,7 @@ namespace SSD_CRUD_APP
 {
     public partial class BookControl : Form
     {
-        String _currentDir = Directory.GetCurrentDirectory();
+        private string tempDir = Path.GetTempPath();
         public BookControl()
         {
             InitializeComponent();
@@ -56,12 +56,12 @@ namespace SSD_CRUD_APP
         {
             var fileToFind = "UserDetails.csv";
             var result = Directory
-                .EnumerateFiles(_currentDir, fileToFind, SearchOption.AllDirectories)
+                .EnumerateFiles(tempDir, fileToFind, SearchOption.AllDirectories)
                 .FirstOrDefault();
 
-            if (result != _currentDir + "\\UserDetails.csv")
+            if (result != (tempDir + "UserDetails.csv"))
             {
-                using (var myFile = File.Create(_currentDir + "\\UserDetails.csv"))
+                using (var myFile = File.Create(tempDir + "UserDetails.csv"))
                 {
                     myFile.Close();
                 }
@@ -72,7 +72,7 @@ namespace SSD_CRUD_APP
             booksListView.Items.Clear();
             try
             {
-                using (var reader = new StreamReader(_currentDir + "\\UserDetails.csv"))
+                using (var reader = new StreamReader(tempDir + "UserDetails.csv"))
                 {
                     while (!reader.EndOfStream)
                     {
@@ -90,7 +90,7 @@ namespace SSD_CRUD_APP
         }
         private void WriteToCSV()
         {
-            using (StreamWriter file = new StreamWriter(_currentDir + "\\UserDetails.csv"))
+            using (StreamWriter file = new StreamWriter(tempDir + "UserDetails.csv"))
             {
                 file.WriteLine();
             }
@@ -100,7 +100,7 @@ namespace SSD_CRUD_APP
             int id = int.Parse(booksListView.SelectedItems[0].SubItems[0].Text);
             List<String> lines = new List<String>();
             List<string> list = new List<string>();
-            using (StreamReader reader = new StreamReader(_currentDir + "\\UserDetails.csv"))
+            using (StreamReader reader = new StreamReader(tempDir + "UserDetails.csv"))
             {
                 String line;
                 while ((line = reader.ReadLine()) != null)
@@ -114,12 +114,12 @@ namespace SSD_CRUD_APP
                     lines.Add(line);
                 }
             }
-            using (StreamWriter writer = new StreamWriter(_currentDir + "\\UserDetails.csv", false))
+            using (StreamWriter writer = new StreamWriter(tempDir + "UserDetails.csv", false))
             {
                 foreach (String line in lines)
                     writer.WriteLine(line);
             }
-            using (StreamReader reader = new StreamReader(_currentDir + "\\UserDetails.csv"))
+            using (StreamReader reader = new StreamReader(tempDir + "UserDetails.csv"))
             {
                 while (!reader.EndOfStream)
                 {
@@ -128,7 +128,7 @@ namespace SSD_CRUD_APP
                         list.Add(line);
                 }
             }
-            using (StreamWriter writer = new StreamWriter(_currentDir + "\\UserDetails.csv", false))
+            using (StreamWriter writer = new StreamWriter(tempDir + "UserDetails.csv", false))
             {
                 foreach (String line in list)
                     writer.WriteLine(line);
@@ -137,7 +137,7 @@ namespace SSD_CRUD_APP
         }
         private void UpdateBook()
         {
-            using (var reader = new StreamReader(_currentDir + "\\UserDetails.csv"))
+            using (var reader = new StreamReader(tempDir + "UserDetails.csv"))
             {
                 while (!reader.EndOfStream)
                 {
@@ -150,6 +150,8 @@ namespace SSD_CRUD_APP
         }
         private void Form1_FormClosing(Object sender, FormClosingEventArgs e)
         {
+            File.Delete(tempDir + "LoginDetails.csv");
+            File.Delete(tempDir + "UserDetails.csv");
             Application.Exit();
         }
     }

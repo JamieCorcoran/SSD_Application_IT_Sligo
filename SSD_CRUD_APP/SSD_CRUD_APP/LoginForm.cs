@@ -14,7 +14,7 @@ namespace SSD_CRUD_APP
 {
     public partial class LoginForm : Form
     {
-        String _currentDir = Directory.GetCurrentDirectory();
+        private string tempDir = Path.GetTempPath();
         public LoginForm()
         {
             InitializeComponent();
@@ -26,7 +26,7 @@ namespace SSD_CRUD_APP
         }
         private void ValidateLoginDetails()
         {
-            using (StreamReader reader = new StreamReader(_currentDir + "\\LoginDetails.csv"))
+            using (StreamReader reader = new StreamReader(tempDir + "LoginDetails.csv"))
             {
                 String line;
                 while ((line = reader.ReadLine()) != null)
