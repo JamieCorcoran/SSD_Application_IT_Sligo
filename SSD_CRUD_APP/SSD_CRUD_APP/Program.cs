@@ -16,7 +16,7 @@ namespace SSD_CRUD_APP
         [STAThread]
         static void Main()
         {
-            AesManaged aseEncrypt = new AesManaged();
+            AesCryptoServiceProvider aseEncrypt = new AesCryptoServiceProvider();
             try
             {
                 string tempDir = Path.GetTempPath();

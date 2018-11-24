@@ -19,7 +19,7 @@ namespace SSD_CRUD_APP
         {
             InitializeComponent();
             CheckForFile();
-            this.FormClosing += Form1_FormClosing;
+            //this.FormClosing += Form1_FormClosing;
         }
 
         private void addBook_Click(object sender, EventArgs e)

@@ -15,13 +15,13 @@ namespace SSD_CRUD_APP
 {
     public partial class LoginForm : Form
     {
-        AesManaged _aesEncrypt = new AesManaged();
+        AesCryptoServiceProvider _aesEncrypt = new AesCryptoServiceProvider();
         private string tempDir = Path.GetTempPath();
         public LoginForm()
         {
             InitializeComponent();
         }
-        public LoginForm(AesManaged aseEcrypt)
+        public LoginForm(AesCryptoServiceProvider aseEcrypt)
         {
             InitializeComponent();
             _aesEncrypt = aseEcrypt;
