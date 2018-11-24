@@ -5,6 +5,7 @@ using System.Data;
 using System.Drawing;
 using System.IO;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -14,10 +15,16 @@ namespace SSD_CRUD_APP
 {
     public partial class LoginForm : Form
     {
+        AesManaged _aesEncrypt = new AesManaged();
         private string tempDir = Path.GetTempPath();
         public LoginForm()
         {
             InitializeComponent();
+        }
+        public LoginForm(AesManaged aseEcrypt)
+        {
+            InitializeComponent();
+            _aesEncrypt = aseEcrypt;
         }
 
         private void exitButton_Click(object sender, EventArgs e)
@@ -26,23 +33,29 @@ namespace SSD_CRUD_APP
         }
         private void ValidateLoginDetails()
         {
-            using (StreamReader reader = new StreamReader(tempDir + "LoginDetails.csv"))
+            using (FileStream fStream = new FileStream(tempDir + "LoginDetails.csv", FileMode.Open))
             {
-                String line;
-                while ((line = reader.ReadLine()) != null)
+                using (CryptoStream cStream = new CryptoStream(fStream, new AesManaged().CreateDecryptor(_aesEncrypt.Key, _aesEncrypt.IV), CryptoStreamMode.Read))
                 {
-                    if (line.Contains(","))
+                    using (StreamReader reader = new StreamReader(cStream))
                     {
-                        String[] split = line.Split(',');
-                        if (split[0] == usernameTextBox.Text && split[1] == passwordTextBox.Text)
+                        String line;
+                        while ((line = reader.ReadLine()) != null)
                         {
-                            BookControl bookControl = new BookControl();
-                            bookControl.Show();
-                            this.Hide();
-                        }
-                        else
-                            MessageBox.Show("Invaild Please enter details again", "Error", MessageBoxButtons.OK);
+                            if (line.Contains(","))
+                            {
+                                String[] split = line.Split(',');
+                                if (split[0] == usernameTextBox.Text && split[1] == passwordTextBox.Text)
+                                {
+                                    BookControl bookControl = new BookControl();
+                                    bookControl.Show();
+                                    this.Hide();
+                                }
+                                else
+                                    MessageBox.Show("Invaild Please enter details again", "Error", MessageBoxButtons.OK);
 
+                            }
+                        }
                     }
                 }
             }
@@ -51,6 +64,12 @@ namespace SSD_CRUD_APP
         private void loginButton_Click(object sender, EventArgs e)
         {
             ValidateLoginDetails();
+        }
+        private void LoginForm_FormClosing(Object sender, FormClosingEventArgs e)
+        {
+            File.Delete(tempDir + "LoginDetails.csv");
+            File.Delete(tempDir + "UserDetails.csv");
+            Application.Exit();
         }
     }
 }

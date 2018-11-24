@@ -16,6 +16,7 @@ namespace SSD_CRUD_APP
         [STAThread]
         static void Main()
         {
+            AesManaged aseEncrypt = new AesManaged();
             try
             {
                 string tempDir = Path.GetTempPath();
@@ -35,7 +36,7 @@ namespace SSD_CRUD_APP
                         {
                             myFile.Close();
                         }
-                        Application.Run(new AddUser());
+                        Application.Run(new AddUser(aseEncrypt));
                     }
                     else
                     {
@@ -45,7 +46,7 @@ namespace SSD_CRUD_APP
                 else
                 {
 
-                    Application.Run(new LoginForm());
+                    Application.Run(new LoginForm(aseEncrypt));
                 }
             }
             catch (Exception ex)

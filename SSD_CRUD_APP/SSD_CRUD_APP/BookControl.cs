@@ -5,6 +5,7 @@ using System.Data;
 using System.Drawing;
 using System.IO;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -137,16 +138,22 @@ namespace SSD_CRUD_APP
         }
         private void UpdateBook()
         {
-            using (var reader = new StreamReader(tempDir + "UserDetails.csv"))
-            {
-                while (!reader.EndOfStream)
-                {
-                    var line = reader.ReadLine();
-                    var values = line.Split(',');
-                    ListViewItem itm = new ListViewItem(values);
-                    booksListView.Items.Add(itm);
-                }
-            }
+            //using (FileStream fStream = new FileStream(tempDir + "LoginDetails.csv", FileMode.Open))
+            //{
+                //using (CryptoStream cStream = new CryptoStream(fStream, new AesManaged().CreateDecryptor(_aesEncrypt.Key, _aesEncrypt.IV), CryptoStreamMode.Write))
+                //{
+                    using (var reader = new StreamReader(tempDir + "UserDetails.csv"))
+                    {
+                        while (!reader.EndOfStream)
+                        {
+                            var line = reader.ReadLine();
+                            var values = line.Split(',');
+                            ListViewItem itm = new ListViewItem(values);
+                            booksListView.Items.Add(itm);
+                        }
+                    }
+                //}
+            //}
         }
         private void Form1_FormClosing(Object sender, FormClosingEventArgs e)
         {

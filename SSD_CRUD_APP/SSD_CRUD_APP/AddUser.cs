@@ -14,11 +14,16 @@ namespace SSD_CRUD_APP
 {
     public partial class AddUser : Form
     {
-        private AesManaged aseEcrypt = new AesManaged();
+        AesManaged _aesEncrypt = new AesManaged();
         private string tempDir = Path.GetTempPath();
         public AddUser()
         {
             InitializeComponent();
+        }
+        public AddUser(AesManaged aseEcrypt)
+        {
+            InitializeComponent();
+            _aesEncrypt = aseEcrypt;
         }
 
         private void AddButton_Click(object sender, EventArgs e)
@@ -31,7 +36,7 @@ namespace SSD_CRUD_APP
             {
                 using (FileStream fStream = new FileStream(tempDir + "LoginDetails.csv", FileMode.Open))
                 {
-                    using (CryptoStream cStream = new CryptoStream(fStream, new AesManaged().CreateEncryptor(aseEcrypt.Key, aseEcrypt.IV), CryptoStreamMode.Write))
+                    using (CryptoStream cStream = new CryptoStream(fStream, new AesManaged().CreateEncryptor(_aesEncrypt.Key, _aesEncrypt.IV), CryptoStreamMode.Write))
                     { 
                         using (StreamWriter w = new StreamWriter(cStream))
                         {
@@ -39,7 +44,10 @@ namespace SSD_CRUD_APP
                             w.WriteLine(line);
                             w.Flush();
                             w.Close();
-                            Application.Restart();
+                            this.Hide();
+                            LoginForm login = new LoginForm(_aesEncrypt);
+                            login.Show();
+                            //Application.Restart();
                         }
                     }
                 }
@@ -65,6 +73,12 @@ namespace SSD_CRUD_APP
         private void EncryptDataToFile()
         {
 
+        }
+        private void AddUser_FormClosing(Object sender, FormClosingEventArgs e)
+        {
+            File.Delete(tempDir + "LoginDetails.csv");
+            File.Delete(tempDir + "UserDetails.csv");
+            Application.Exit();
         }
     }
 }
