@@ -51,6 +51,7 @@ namespace SSD_CRUD_APP
                         }
                     }
                 }
+                File.SetAttributes(tempDir + "LoginDetails.csv", FileAttributes.Hidden);
             }
             else
                 MessageBox.Show("Invaild Please enter details", "Error", MessageBoxButtons.OK);
@@ -68,17 +69,20 @@ namespace SSD_CRUD_APP
         private void exitButton_Click(object sender, EventArgs e)
         {
             File.Delete(tempDir + "LoginDetails.csv");
+            File.Delete(tempDir + "UserDetails.csv");
+            File.Delete(tempDir + "Keys.csv");
             this.Close();
         }
         private void AddUser_FormClosing(Object sender, FormClosingEventArgs e)
         {
             File.Delete(tempDir + "LoginDetails.csv");
             File.Delete(tempDir + "UserDetails.csv");
+            File.Delete(tempDir + "Keys.csv");
             Application.Exit();
         }
         private void StoreKey()
         {
-            if (!CheckForFile())
+            if (CheckForFile() == (tempDir + "Keys.csv"))
             {
                 string keyStored;
                 string ivStored;
@@ -97,6 +101,7 @@ namespace SSD_CRUD_APP
                     w.Flush();
                     w.Close();
                 }
+                File.SetAttributes(tempDir + "Keys.csv", FileAttributes.Hidden);
             }
         }
         private List<string> BreakUpValues(string value)
@@ -133,14 +138,14 @@ namespace SSD_CRUD_APP
 
             return newValue;
         }
-        private bool CheckForFile()
+        private string CheckForFile()
         {
             var fileToFind = "Keys.csv";
             var result = Directory
                 .EnumerateFiles(tempDir, fileToFind, SearchOption.AllDirectories)
                 .FirstOrDefault();
 
-            return Convert.ToBoolean(result);
+            return result;
         }
     }
 }
