@@ -70,11 +70,13 @@ namespace SSD_CRUD_APP
         private void exitButton_Click(object sender, EventArgs e)
         {
             File.Delete(tempDir + "LoginDetails.csv");
+            File.Delete(tempDir + "Keys.csv");
             this.Close();
         }
         private void AddUser_FormClosing(Object sender, FormClosingEventArgs e)
         {
             File.Delete(tempDir + "LoginDetails.csv");
+            File.Delete(tempDir + "Keys.csv");
             Application.Exit();
         }
     }

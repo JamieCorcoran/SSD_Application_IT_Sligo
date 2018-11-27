@@ -14,16 +14,26 @@ namespace SSD_CRUD_APP
 {
     public partial class BookControl : Form
     {
+        KeyClass keyClass = new KeyClass();
         private string tempDir = Path.GetTempPath();
+        AesCryptoServiceProvider _aesEncrypt = new AesCryptoServiceProvider();
         public BookControl()
         {
             InitializeComponent();
             CheckForFile();
         }
+        public BookControl(AesCryptoServiceProvider aesEncrypt)
+        {
+            InitializeComponent();
+            CheckForFile();
+            _aesEncrypt = aesEncrypt;
+            if(string.IsNullOrEmpty(keyClass.GetKey("y")))
+                keyClass.StoreKey(_aesEncrypt, "y");
+        }
 
         private void addBook_Click(object sender, EventArgs e)
         {
-            AddBook addBookForm = new AddBook(this);
+            AddBook addBookForm = new AddBook(this, _aesEncrypt);
             addBookForm.Show();
         }
 
@@ -72,14 +82,22 @@ namespace SSD_CRUD_APP
             booksListView.Items.Clear();
             try
             {
-                using (var reader = new StreamReader(tempDir + "BookDetails.csv"))
+                byte[] key = Convert.FromBase64String(keyClass.GetKey("y"));
+                byte[] iv = Convert.FromBase64String(keyClass.GetIV("y"));
+                using (FileStream fStream = new FileStream(tempDir + "BookDetails.csv", FileMode.Open))
                 {
-                    while (!reader.EndOfStream)
+                    using (CryptoStream cStream = new CryptoStream(fStream, new AesManaged().CreateDecryptor(key, iv), CryptoStreamMode.Read))
                     {
-                        var line = reader.ReadLine();
-                        var values = line.Split(',');
-                        ListViewItem  itm = new ListViewItem(values);
-                        booksListView.Items.Add(itm);
+                        using (StreamReader reader = new StreamReader(cStream))
+                        {
+                            while (!reader.EndOfStream)
+                            {
+                                var line = reader.ReadLine();
+                                var values = line.Split(',');
+                                ListViewItem itm = new ListViewItem(values);
+                                booksListView.Items.Add(itm);
+                            }
+                        }
                     }
                 }
             }
@@ -97,41 +115,46 @@ namespace SSD_CRUD_APP
         }
         private void DeleteBook()
         {
-            int id = int.Parse(booksListView.SelectedItems[0].SubItems[0].Text);
-            List<String> lines = new List<String>();
-            List<string> list = new List<string>();
-            using (StreamReader reader = new StreamReader(tempDir + "BookDetails.csv"))
+            byte[] key = Convert.FromBase64String(keyClass.GetKey("y"));
+            byte[] iv = Convert.FromBase64String(keyClass.GetIV("y"));
+            List<string> allBooks = GetBooks();
+            string addBooksBack = "";
+            string bookToRemove="";
+
+            foreach(string value in allBooks)
             {
-                String line;
-                while ((line = reader.ReadLine()) != null)
+                if (value.Contains(booksListView.SelectedItems[0].SubItems[0].Text+","))
                 {
-                    if (line.Contains(","))
+                    bookToRemove = value;
+                }
+            }
+            allBooks.Remove(bookToRemove);
+            foreach (string value in allBooks)
+            {
+                addBooksBack = addBooksBack + value + "\r\n";
+            }
+            if(allBooks.Count > 0)
+            {
+                addBooksBack = addBooksBack.Substring(0, addBooksBack.Length - 2);
+            }
+            if (allBooks.Count == 0)
+            {
+                File.Delete(tempDir + "BookDetails.csv");
+            }
+            else
+            {
+                using (FileStream fStream = new FileStream(tempDir + "BookDetails.csv", FileMode.Open))
+                {
+                    using (CryptoStream cStream = new CryptoStream(fStream, new AesManaged().CreateEncryptor(key, iv), CryptoStreamMode.Write))
                     {
-                        String[] split = line.Split(',');
-                        if (split[0].Contains(booksListView.SelectedItems[0].SubItems[0].Text))
-                            line = "";
+                        using (StreamWriter w = new StreamWriter(cStream))
+                        {
+                            w.WriteLine(addBooksBack);
+                            w.Flush();
+                            w.Close();
+                        }
                     }
-                    lines.Add(line);
                 }
-            }
-            using (StreamWriter writer = new StreamWriter(tempDir + "BookDetails.csv", false))
-            {
-                foreach (String line in lines)
-                    writer.WriteLine(line);
-            }
-            using (StreamReader reader = new StreamReader(tempDir + "BookDetails.csv"))
-            {
-                while (!reader.EndOfStream)
-                {
-                    var line = reader.ReadLine();
-                    if (!string.IsNullOrEmpty(line))
-                        list.Add(line);
-                }
-            }
-            using (StreamWriter writer = new StreamWriter(tempDir + "BookDetails.csv", false))
-            {
-                foreach (String line in list)
-                    writer.WriteLine(line);
             }
             ReadInBooks();
         }
@@ -157,6 +180,35 @@ namespace SSD_CRUD_APP
         private void Form1_FormClosing(Object sender, FormClosingEventArgs e)
         {
             Application.Exit();
+        }
+        private List<string> GetBooks()
+        {
+            byte[] key = Convert.FromBase64String(keyClass.GetKey("y"));
+            byte[] iv = Convert.FromBase64String(keyClass.GetIV("y"));
+            List<string> allBooks = new List<string>();
+            try
+            {
+                using (FileStream fStream = new FileStream(tempDir + "BookDetails.csv", FileMode.Open))
+                {
+                    using (CryptoStream cStream = new CryptoStream(fStream, new AesManaged().CreateDecryptor(key, iv), CryptoStreamMode.Read))
+                    {
+                        using (StreamReader reader = new StreamReader(cStream))
+                        {
+                            while (!reader.EndOfStream)
+                            {
+                                var line = reader.ReadLine();
+                                allBooks.Add(line);
+                            }
+                            reader.Close();
+                        }
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+            }
+            return allBooks;
         }
     }
 }

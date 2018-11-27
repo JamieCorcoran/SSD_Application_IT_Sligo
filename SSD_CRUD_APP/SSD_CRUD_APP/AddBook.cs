@@ -5,6 +5,7 @@ using System.Data;
 using System.Drawing;
 using System.IO;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -13,15 +14,23 @@ namespace SSD_CRUD_APP
 {
     public partial class AddBook : Form
     {
+        KeyClass keyClass = new KeyClass();
         BookControl _bookControl = new BookControl();
+        private byte[] _key;
+        private byte[] _iv;
+        AesCryptoServiceProvider _aesEncrypt = new AesCryptoServiceProvider();
+        private string tempDir = Path.GetTempPath();
         public AddBook()
         {
             InitializeComponent();
         }
-        public AddBook(BookControl bookCtrl)
+        public AddBook(BookControl bookCtrl, AesCryptoServiceProvider aesEncrypt)
         {
             InitializeComponent();
             _bookControl = bookCtrl;
+            _aesEncrypt = aesEncrypt;
+            _key = Convert.FromBase64String(keyClass.GetKey("y")); ;
+            _iv = Convert.FromBase64String(keyClass.GetIV("y")); ;
         }
 
         private void cancelButton_Click(object sender, EventArgs e)
@@ -35,18 +44,26 @@ namespace SSD_CRUD_APP
         }
         private void CreateBook()
         {
+            string allBooks = GetBooks();
             int id = GetIdValue();
             Book newBook = new Book(id, nameTextBox.Text, authorTextBox.Text, publisherTextBox.Text, dateTimePickerPublished.Value);
             if (CheckForNullorEmpty(newBook))
             {
-                using (var w = new StreamWriter(Path.GetTempPath() + "BookDetails.csv", append: true))
+                using (FileStream fStream = new FileStream(tempDir + "BookDetails.csv", FileMode.Open))
                 {
-                    var line = string.Format(newBook.Id.ToString() + "," + newBook.Name + "," + newBook.Author + "," + newBook.Publisher + "," + newBook.DatePublished.ToString() + "," + newBook.DatetimeInserted.ToString());
-                    w.WriteLine(line);
-                    w.Flush();
-                    w.Close();
-                    _bookControl.ReadInBooks();
-                    this.Close();
+                    using (CryptoStream cStream = new CryptoStream(fStream , new AesManaged().CreateEncryptor(_key, _iv), CryptoStreamMode.Write))
+                    {
+                        using (StreamWriter w = new StreamWriter(cStream))
+                        {
+                            var line = string.Format(newBook.Id.ToString() + "," + newBook.Name + "," + newBook.Author + "," + newBook.Publisher + "," + newBook.DatePublished.ToString() + "," + newBook.DatetimeInserted.ToString());
+                            allBooks = allBooks + line;
+                            w.WriteLine(allBooks);
+                            w.Flush();
+                            w.Close();
+                            _bookControl.ReadInBooks();
+                            this.Close();
+                        }
+                    }
                 }
             }
             else
@@ -75,17 +92,23 @@ namespace SSD_CRUD_APP
             int max = 1;
             try
             {
-                using (var reader = new StreamReader(Path.GetTempPath() + "BookDetails.csv"))
+                using (FileStream fStream = new FileStream(tempDir + "BookDetails.csv", FileMode.Open))
                 {
-                    while (!reader.EndOfStream)
+                    using (CryptoStream cStream = new CryptoStream(fStream, new AesManaged().CreateDecryptor(_key, _iv), CryptoStreamMode.Read))
                     {
-                        string line = reader.ReadLine();
-                        var values = line.Split(',');
-                        if (string.IsNullOrEmpty(line))
-                            break;
-                        if (int.Parse(values[0]) >= max)
+                        using (StreamReader reader = new StreamReader(cStream))
                         {
-                            max = int.Parse(values[0]) + 1;
+                            while (!reader.EndOfStream)
+                            {
+                                string line = reader.ReadLine();
+                                var values = line.Split(',');
+                                if (string.IsNullOrEmpty(line))
+                                    break;
+                                if (int.Parse(values[0]) >= max)
+                                {
+                                    max = int.Parse(values[0]) + 1;
+                                }
+                            }
                         }
                     }
                 }
@@ -95,6 +118,32 @@ namespace SSD_CRUD_APP
                 Console.WriteLine(e);
             }
             return max;
+        }
+        private string GetBooks()
+        {
+            string allBooks = "";
+            try
+            {
+                using (FileStream fStream = new FileStream(tempDir + "BookDetails.csv", FileMode.Open))
+                {
+                    using (CryptoStream cStream = new CryptoStream(fStream, new AesManaged().CreateDecryptor(_key, _iv), CryptoStreamMode.Read))
+                    {
+                        using (StreamReader reader = new StreamReader(cStream))
+                        {
+                            while (!reader.EndOfStream)
+                            {
+                                var line = reader.ReadLine();
+                                allBooks = allBooks + line + "\r\n";
+                            }
+                        }
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+            }
+            return allBooks;
         }
     }
 }

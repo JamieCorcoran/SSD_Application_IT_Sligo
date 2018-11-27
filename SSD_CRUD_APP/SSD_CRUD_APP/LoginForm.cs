@@ -50,7 +50,7 @@ namespace SSD_CRUD_APP
                                 String[] split = line.Split(',');
                                 if (split[0] == usernameTextBox.Text && split[1] == passwordTextBox.Text)
                                 {
-                                    BookControl bookControl = new BookControl();
+                                    BookControl bookControl = new BookControl(_aesEncrypt);
                                     bookControl.Show();
                                     this.Hide();
                                 }

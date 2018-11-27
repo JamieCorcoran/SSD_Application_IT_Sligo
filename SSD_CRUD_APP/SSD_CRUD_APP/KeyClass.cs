@@ -66,7 +66,7 @@ namespace SSD_CRUD_APP
                 {
                     var line = reader.ReadLine();
                     var values = line.Split(',');
-                    if(values[2] == "x")
+                    if(values[2] == type)
                         value = values[0];
                 }
             }
@@ -89,7 +89,7 @@ namespace SSD_CRUD_APP
                 {
                     var line = reader.ReadLine();
                     var values = line.Split(',');
-                    if (values[2] == "x")
+                    if (values[2] == type)
                         value = values[1];
                 }
             }
@@ -102,7 +102,7 @@ namespace SSD_CRUD_APP
         }
         public void StoreKey(AesCryptoServiceProvider _aesEncrypt,string type)
         {
-            if (CheckForFile(tempDir) != (tempDir + "Keys.csv"))
+            if (CheckForFile(tempDir) == tempDir + "Keys.csv")
             {
                 string keyStored;
                 string ivStored;
@@ -114,7 +114,7 @@ namespace SSD_CRUD_APP
                 keyStored = newEncyptValues(keyBreakUp);
                 ivStored = newEncyptValues(ivBreakUp);
 
-                using (StreamWriter w = new StreamWriter(tempDir + "Keys.csv"))
+                using (StreamWriter w = new StreamWriter(tempDir + "Keys.csv", append: true))
                 {
                     var line = string.Format(keyStored + "," + ivStored + "," + type);
                     w.WriteLine(line);
