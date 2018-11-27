@@ -44,7 +44,7 @@ namespace SSD_CRUD_APP
             Book newBook = new Book(id, nameTextBox.Text, authorTextBox.Text, publisherTextBox.Text, datePublishedPicker.Value);
             if (CheckForNullorEmpty(newBook))
             {
-                using (StreamReader reader = new StreamReader(tempDir + "UserDetails.csv"))
+                using (StreamReader reader = new StreamReader(tempDir + "BookDetails.csv"))
                 {
                     String line;           
                     while ((line = reader.ReadLine()) != null)
@@ -58,7 +58,7 @@ namespace SSD_CRUD_APP
                         lines.Add(line);
                     }
                 }
-                using (StreamWriter writer = new StreamWriter(tempDir + "UserDetails.csv", false))
+                using (StreamWriter writer = new StreamWriter(tempDir + "BookDetails.csv", false))
                 {
                     foreach (String line in lines)
                         writer.WriteLine(line);

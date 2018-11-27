@@ -19,7 +19,6 @@ namespace SSD_CRUD_APP
         {
             InitializeComponent();
             CheckForFile();
-            //this.FormClosing += Form1_FormClosing;
         }
 
         private void addBook_Click(object sender, EventArgs e)
@@ -55,14 +54,14 @@ namespace SSD_CRUD_APP
         }
         private void CheckForFile()
         {
-            var fileToFind = "UserDetails.csv";
+            var fileToFind = "BookDetails.csv";
             var result = Directory
                 .EnumerateFiles(tempDir, fileToFind, SearchOption.AllDirectories)
                 .FirstOrDefault();
 
-            if (result != (tempDir + "UserDetails.csv"))
+            if (result != (tempDir + "BookDetails.csv"))
             {
-                using (var myFile = File.Create(tempDir + "UserDetails.csv"))
+                using (var myFile = File.Create(tempDir + "BookDetails.csv"))
                 {
                     myFile.Close();
                 }
@@ -73,7 +72,7 @@ namespace SSD_CRUD_APP
             booksListView.Items.Clear();
             try
             {
-                using (var reader = new StreamReader(tempDir + "UserDetails.csv"))
+                using (var reader = new StreamReader(tempDir + "BookDetails.csv"))
                 {
                     while (!reader.EndOfStream)
                     {
@@ -91,7 +90,7 @@ namespace SSD_CRUD_APP
         }
         private void WriteToCSV()
         {
-            using (StreamWriter file = new StreamWriter(tempDir + "UserDetails.csv"))
+            using (StreamWriter file = new StreamWriter(tempDir + "BookDetails.csv"))
             {
                 file.WriteLine();
             }
@@ -101,7 +100,7 @@ namespace SSD_CRUD_APP
             int id = int.Parse(booksListView.SelectedItems[0].SubItems[0].Text);
             List<String> lines = new List<String>();
             List<string> list = new List<string>();
-            using (StreamReader reader = new StreamReader(tempDir + "UserDetails.csv"))
+            using (StreamReader reader = new StreamReader(tempDir + "BookDetails.csv"))
             {
                 String line;
                 while ((line = reader.ReadLine()) != null)
@@ -115,12 +114,12 @@ namespace SSD_CRUD_APP
                     lines.Add(line);
                 }
             }
-            using (StreamWriter writer = new StreamWriter(tempDir + "UserDetails.csv", false))
+            using (StreamWriter writer = new StreamWriter(tempDir + "BookDetails.csv", false))
             {
                 foreach (String line in lines)
                     writer.WriteLine(line);
             }
-            using (StreamReader reader = new StreamReader(tempDir + "UserDetails.csv"))
+            using (StreamReader reader = new StreamReader(tempDir + "BookDetails.csv"))
             {
                 while (!reader.EndOfStream)
                 {
@@ -129,7 +128,7 @@ namespace SSD_CRUD_APP
                         list.Add(line);
                 }
             }
-            using (StreamWriter writer = new StreamWriter(tempDir + "UserDetails.csv", false))
+            using (StreamWriter writer = new StreamWriter(tempDir + "BookDetails.csv", false))
             {
                 foreach (String line in list)
                     writer.WriteLine(line);
@@ -142,7 +141,7 @@ namespace SSD_CRUD_APP
             //{
                 //using (CryptoStream cStream = new CryptoStream(fStream, new AesManaged().CreateDecryptor(_aesEncrypt.Key, _aesEncrypt.IV), CryptoStreamMode.Write))
                 //{
-                    using (var reader = new StreamReader(tempDir + "UserDetails.csv"))
+                    using (var reader = new StreamReader(tempDir + "BookDetails.csv"))
                     {
                         while (!reader.EndOfStream)
                         {
@@ -157,8 +156,6 @@ namespace SSD_CRUD_APP
         }
         private void Form1_FormClosing(Object sender, FormClosingEventArgs e)
         {
-            File.Delete(tempDir + "LoginDetails.csv");
-            File.Delete(tempDir + "UserDetails.csv");
             Application.Exit();
         }
     }

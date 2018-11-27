@@ -14,6 +14,7 @@ namespace SSD_CRUD_APP
 {
     public partial class AddUser : Form
     {
+        KeyClass keyClass = new KeyClass();
         AesCryptoServiceProvider _aesEncrypt = new AesCryptoServiceProvider();
         private string tempDir = Path.GetTempPath();
         public AddUser()
@@ -24,14 +25,14 @@ namespace SSD_CRUD_APP
         {
             InitializeComponent();
             _aesEncrypt = aseEcrypt;
-            StoreKey();
+            keyClass.StoreKey(_aesEncrypt, "x");
         }
 
         private void AddButton_Click(object sender, EventArgs e)
         {
-            AddUserDetails();
+            AddLoginDetails();
         }
-        private void AddUserDetails()
+        private void AddLoginDetails()
         {
             if (CheckForNullorEmpty())
             {
@@ -69,83 +70,12 @@ namespace SSD_CRUD_APP
         private void exitButton_Click(object sender, EventArgs e)
         {
             File.Delete(tempDir + "LoginDetails.csv");
-            File.Delete(tempDir + "UserDetails.csv");
-            File.Delete(tempDir + "Keys.csv");
             this.Close();
         }
         private void AddUser_FormClosing(Object sender, FormClosingEventArgs e)
         {
             File.Delete(tempDir + "LoginDetails.csv");
-            File.Delete(tempDir + "UserDetails.csv");
-            File.Delete(tempDir + "Keys.csv");
             Application.Exit();
-        }
-        private void StoreKey()
-        {
-            if (CheckForFile() == (tempDir + "Keys.csv"))
-            {
-                string keyStored;
-                string ivStored;
-                List<string> keyBreakUp = new List<string>();
-                List<string> ivBreakUp = new List<string>();
-
-                keyBreakUp = BreakUpValues(Convert.ToBase64String(_aesEncrypt.Key));
-                ivBreakUp = BreakUpValues(Convert.ToBase64String(_aesEncrypt.IV));
-                keyStored = newEncyptValues(keyBreakUp);
-                ivStored = newEncyptValues(ivBreakUp);
-
-                using (StreamWriter w = new StreamWriter(tempDir + "Keys.csv"))
-                {
-                    var line = string.Format(keyStored + "," + ivStored);
-                    w.WriteLine(line);
-                    w.Flush();
-                    w.Close();
-                }
-                File.SetAttributes(tempDir + "Keys.csv", FileAttributes.Hidden);
-            }
-        }
-        private List<string> BreakUpValues(string value)
-        {
-            List<string> newValue = new List<string>();
-            int count = 0;
-            while (!string.IsNullOrEmpty(value))
-            {
-                newValue.Add(value.Substring(0, 4));
-                value = value.Remove(0, 4);
-                count++;
-            }
-            return newValue;
-        }
-        private string newEncyptValues(List<string> oldValues)
-        {
-            List<long> seqKey = new List<long>(new long[] { 5,0,2,3,8,7,6,9,1,4,10 });
-            List<long> seqIV = new List<long>(new long[] { 0,5,3,2,1,4 });
-            string newValue = "";
-            if(oldValues.Count == 11)
-            {
-                foreach(long value in seqKey)
-                {
-                    newValue = newValue + oldValues[Convert.ToInt32(value)];
-                }
-            }
-            else
-            {
-                foreach (long value in seqIV)
-                {
-                    newValue = newValue + oldValues[Convert.ToInt32(value)];
-                }
-            }
-
-            return newValue;
-        }
-        private string CheckForFile()
-        {
-            var fileToFind = "Keys.csv";
-            var result = Directory
-                .EnumerateFiles(tempDir, fileToFind, SearchOption.AllDirectories)
-                .FirstOrDefault();
-
-            return result;
         }
     }
 }

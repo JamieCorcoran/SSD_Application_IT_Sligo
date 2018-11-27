@@ -39,7 +39,7 @@ namespace SSD_CRUD_APP
             Book newBook = new Book(id, nameTextBox.Text, authorTextBox.Text, publisherTextBox.Text, dateTimePickerPublished.Value);
             if (CheckForNullorEmpty(newBook))
             {
-                using (var w = new StreamWriter(Path.GetTempPath() + "UserDetails.csv", append: true))
+                using (var w = new StreamWriter(Path.GetTempPath() + "BookDetails.csv", append: true))
                 {
                     var line = string.Format(newBook.Id.ToString() + "," + newBook.Name + "," + newBook.Author + "," + newBook.Publisher + "," + newBook.DatePublished.ToString() + "," + newBook.DatetimeInserted.ToString());
                     w.WriteLine(line);
@@ -75,7 +75,7 @@ namespace SSD_CRUD_APP
             int max = 1;
             try
             {
-                using (var reader = new StreamReader(Path.GetTempPath() + "UserDetails.csv"))
+                using (var reader = new StreamReader(Path.GetTempPath() + "BookDetails.csv"))
                 {
                     while (!reader.EndOfStream)
                     {
