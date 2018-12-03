@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Windows.Forms;
 
 namespace SSD_CRUD_APP
 {
@@ -133,6 +134,7 @@ namespace SSD_CRUD_APP
             // 
             // AddUser
             // 
+            this.FormClosing += new FormClosingEventHandler(AddUser_FormClosing);
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.DodgerBlue;

@@ -5,6 +5,7 @@ using System.Data;
 using System.Drawing;
 using System.IO;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -13,29 +14,45 @@ namespace SSD_CRUD_APP
 {
     public partial class AddUser : Form
     {
-        String _currentDir = Directory.GetCurrentDirectory();
-
+        KeyClass keyClass = new KeyClass();
+        AesCryptoServiceProvider _aesEncrypt = new AesCryptoServiceProvider();
+        private string tempDir = Path.GetTempPath();
         public AddUser()
         {
             InitializeComponent();
         }
+        public AddUser(AesCryptoServiceProvider aseEcrypt)
+        {
+            InitializeComponent();
+            _aesEncrypt = aseEcrypt;
+            keyClass.StoreKey(_aesEncrypt, "x");
+        }
 
         private void AddButton_Click(object sender, EventArgs e)
         {
-            AddUserDetails();
+            AddLoginDetails();
         }
-        private void AddUserDetails()
+        private void AddLoginDetails()
         {
             if (CheckForNullorEmpty())
             {
-                using (var w = new StreamWriter(_currentDir + "\\LoginDetails.csv", append: true))
+                using (FileStream fStream = new FileStream(tempDir + "LoginDetails.csv", FileMode.Open))
                 {
-                    var line = string.Format(usernameTextBox.Text + "," + passwordTextBox.Text);
-                    w.WriteLine(line);
-                    w.Flush();
-                    w.Close();
-                    Application.Restart();
+                    using (CryptoStream cStream = new CryptoStream(fStream, new AesManaged().CreateEncryptor(_aesEncrypt.Key, _aesEncrypt.IV), CryptoStreamMode.Write))
+                    {
+                        using (StreamWriter w = new StreamWriter(cStream))
+                        {
+                            var line = string.Format(usernameTextBox.Text + "," + passwordTextBox.Text);
+                            w.WriteLine(line);
+                            w.Flush();
+                            w.Close();
+                            this.Hide();
+                            LoginForm login = new LoginForm(_aesEncrypt);
+                            login.Show();
+                        }
+                    }
                 }
+                File.SetAttributes(tempDir + "LoginDetails.csv", FileAttributes.Hidden);
             }
             else
                 MessageBox.Show("Invaild Please enter details", "Error", MessageBoxButtons.OK);
@@ -52,8 +69,15 @@ namespace SSD_CRUD_APP
 
         private void exitButton_Click(object sender, EventArgs e)
         {
-            File.Delete(_currentDir + "\\LoginDetails.csv");
+            File.Delete(tempDir + "LoginDetails.csv");
+            File.Delete(tempDir + "Keys.csv");
             this.Close();
+        }
+        private void AddUser_FormClosing(Object sender, FormClosingEventArgs e)
+        {
+            File.Delete(tempDir + "LoginDetails.csv");
+            File.Delete(tempDir + "Keys.csv");
+            Application.Exit();
         }
     }
 }
