@@ -78,30 +78,36 @@ namespace SSD_CRUD_APP
         public void ReadInBooks()
         {
             booksListView.Items.Clear();
-            try
+            if (File.Exists(tempDir + "BookDetails.csv"))
             {
-                byte[] key = keyClass.GetPrivateKey(_aesEncrypt);
-                byte[] iv = keyClass.GetIV(_aesEncrypt);
-                using (FileStream fStream = new FileStream(tempDir + "BookDetails.csv", FileMode.Open))
+                try
                 {
-                    using (CryptoStream cStream = new CryptoStream(fStream, new AesManaged().CreateDecryptor(key, iv), CryptoStreamMode.Read))
+                    byte[] key = keyClass.GetPrivateKey(_aesEncrypt);
+                    byte[] iv = keyClass.GetIV(_aesEncrypt);
+                    using (FileStream fStream = new FileStream(tempDir + "BookDetails.csv", FileMode.Open))
                     {
-                        using (StreamReader reader = new StreamReader(cStream))
+                        if (fStream.Length > 0)
                         {
-                            while (!reader.EndOfStream)
+                            using (CryptoStream cStream = new CryptoStream(fStream, new AesManaged().CreateDecryptor(key, iv), CryptoStreamMode.Read))
                             {
-                                var line = reader.ReadLine();
-                                var values = line.Split(',');
-                                ListViewItem itm = new ListViewItem(values);
-                                booksListView.Items.Add(itm);
+                                using (StreamReader reader = new StreamReader(cStream))
+                                {
+                                    while (!reader.EndOfStream)
+                                    {
+                                        var line = reader.ReadLine();
+                                        var values = line.Split(',');
+                                        ListViewItem itm = new ListViewItem(values);
+                                        booksListView.Items.Add(itm);
+                                    }
+                                }
                             }
                         }
                     }
                 }
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine(e);
+                catch (Exception e)
+                {
+                    Console.WriteLine(e);
+                }
             }
         }
         private void WriteToCSV()
@@ -176,27 +182,30 @@ namespace SSD_CRUD_APP
             byte[] key = keyClass.GetPrivateKey(_aesEncrypt);
             byte[] iv = keyClass.GetIV(_aesEncrypt);
             List<string> allBooks = new List<string>();
-            try
+            if (File.Exists(tempDir + "BookDetails.csv"))
             {
-                using (FileStream fStream = new FileStream(tempDir + "BookDetails.csv", FileMode.Open))
+                try
                 {
-                    using (CryptoStream cStream = new CryptoStream(fStream, new AesManaged().CreateDecryptor(key, iv), CryptoStreamMode.Read))
+                    using (FileStream fStream = new FileStream(tempDir + "BookDetails.csv", FileMode.Open))
                     {
-                        using (StreamReader reader = new StreamReader(cStream))
+                        using (CryptoStream cStream = new CryptoStream(fStream, new AesManaged().CreateDecryptor(key, iv), CryptoStreamMode.Read))
                         {
-                            while (!reader.EndOfStream)
+                            using (StreamReader reader = new StreamReader(cStream))
                             {
-                                var line = reader.ReadLine();
-                                allBooks.Add(line);
+                                while (!reader.EndOfStream)
+                                {
+                                    var line = reader.ReadLine();
+                                    allBooks.Add(line);
+                                }
+                                reader.Close();
                             }
-                            reader.Close();
                         }
                     }
                 }
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine(e);
+                catch (Exception e)
+                {
+                    Console.WriteLine(e);
+                }
             }
             return allBooks;
         }

@@ -94,19 +94,22 @@ namespace SSD_CRUD_APP
             {
                 using (FileStream fStream = new FileStream(tempDir + "BookDetails.csv", FileMode.Open))
                 {
-                    using (CryptoStream cStream = new CryptoStream(fStream, new AesManaged().CreateDecryptor(_key, _iv), CryptoStreamMode.Read))
+                    if (fStream.Length > 0)
                     {
-                        using (StreamReader reader = new StreamReader(cStream))
+                        using (CryptoStream cStream = new CryptoStream(fStream, new AesManaged().CreateDecryptor(_key, _iv), CryptoStreamMode.Read))
                         {
-                            while (!reader.EndOfStream)
+                            using (StreamReader reader = new StreamReader(cStream))
                             {
-                                string line = reader.ReadLine();
-                                var values = line.Split(',');
-                                if (string.IsNullOrEmpty(line))
-                                    break;
-                                if (int.Parse(values[0]) >= max)
+                                while (!reader.EndOfStream)
                                 {
-                                    max = int.Parse(values[0]) + 1;
+                                    string line = reader.ReadLine();
+                                    var values = line.Split(',');
+                                    if (string.IsNullOrEmpty(line))
+                                        break;
+                                    if (int.Parse(values[0]) >= max)
+                                    {
+                                        max = int.Parse(values[0]) + 1;
+                                    }
                                 }
                             }
                         }
@@ -126,14 +129,17 @@ namespace SSD_CRUD_APP
             {
                 using (FileStream fStream = new FileStream(tempDir + "BookDetails.csv", FileMode.Open))
                 {
-                    using (CryptoStream cStream = new CryptoStream(fStream, new AesManaged().CreateDecryptor(_key, _iv), CryptoStreamMode.Read))
+                    if (fStream.Length > 0)
                     {
-                        using (StreamReader reader = new StreamReader(cStream))
+                        using (CryptoStream cStream = new CryptoStream(fStream, new AesManaged().CreateDecryptor(_key, _iv), CryptoStreamMode.Read))
                         {
-                            while (!reader.EndOfStream)
+                            using (StreamReader reader = new StreamReader(cStream))
                             {
-                                var line = reader.ReadLine();
-                                allBooks = allBooks + line + "\r\n";
+                                while (!reader.EndOfStream)
+                                {
+                                    var line = reader.ReadLine();
+                                    allBooks = allBooks + line + "\r\n";
+                                }
                             }
                         }
                     }
