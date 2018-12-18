@@ -29,8 +29,8 @@ namespace SSD_CRUD_APP
             InitializeComponent();
             _bookControl = bookCtrl;
             _aesEncrypt = aesEncrypt;
-            _key = Convert.FromBase64String(keyClass.GetKey("y")); ;
-            _iv = Convert.FromBase64String(keyClass.GetIV("y")); ;
+            //_key = Convert.FromBase64String(keyClass.GetKey("y")); ;
+            //_iv = Convert.FromBase64String(keyClass.GetIV("y")); ;
         }
 
         private void cancelButton_Click(object sender, EventArgs e)

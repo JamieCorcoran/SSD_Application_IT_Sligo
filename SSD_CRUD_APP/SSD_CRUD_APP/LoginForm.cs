@@ -34,8 +34,8 @@ namespace SSD_CRUD_APP
         }
         private void ValidateLoginDetails()
         {
-            byte[] key =  Convert.FromBase64String(keyClass.GetKey("x"));
-            byte[] iv = Convert.FromBase64String(keyClass.GetIV("x"));
+            byte[] key = keyClass.GetPrivateKey(_aesEncrypt);
+            byte[] iv = keyClass.GetIV(_aesEncrypt);
             using (FileStream fStream = new FileStream(tempDir + "LoginDetails.csv", FileMode.Open))
             {
                 using (CryptoStream cStream = new CryptoStream(fStream, new AesManaged().CreateDecryptor(key, iv), CryptoStreamMode.Read))
@@ -56,7 +56,6 @@ namespace SSD_CRUD_APP
                                 }
                                 else
                                     MessageBox.Show("Invaild Please enter details again", "Error", MessageBoxButtons.OK);
-
                             }
                         }
                     }

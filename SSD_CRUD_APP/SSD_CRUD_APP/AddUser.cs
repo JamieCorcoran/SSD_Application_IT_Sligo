@@ -25,7 +25,6 @@ namespace SSD_CRUD_APP
         {
             InitializeComponent();
             _aesEncrypt = aseEcrypt;
-            keyClass.StoreKey(_aesEncrypt, "x");
         }
 
         private void AddButton_Click(object sender, EventArgs e)
@@ -36,6 +35,8 @@ namespace SSD_CRUD_APP
         {
             if (CheckForNullorEmpty())
             {
+                keyClass.GenKey_SaveInContainer("MyKeys");
+                keyClass.MakePrivateKeyIV(_aesEncrypt, Environment.UserName);
                 using (FileStream fStream = new FileStream(tempDir + "LoginDetails.csv", FileMode.Open))
                 {
                     using (CryptoStream cStream = new CryptoStream(fStream, new AesManaged().CreateEncryptor(_aesEncrypt.Key, _aesEncrypt.IV), CryptoStreamMode.Write))
@@ -69,14 +70,10 @@ namespace SSD_CRUD_APP
 
         private void exitButton_Click(object sender, EventArgs e)
         {
-            File.Delete(tempDir + "LoginDetails.csv");
-            File.Delete(tempDir + "Keys.csv");
             this.Close();
         }
         private void AddUser_FormClosing(Object sender, FormClosingEventArgs e)
         {
-            File.Delete(tempDir + "LoginDetails.csv");
-            File.Delete(tempDir + "Keys.csv");
             Application.Exit();
         }
     }

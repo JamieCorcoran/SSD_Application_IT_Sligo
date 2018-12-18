@@ -42,87 +42,92 @@ namespace SSD_CRUD_APP
 
             return newValue;
         }
-        public List<string> BreakUpValues(string value)
+        private void StoreKeyIV(byte[] aesKey, byte[] aesIV)
         {
-            List<string> newValue = new List<string>();
-            int count = 0;
-            while (!string.IsNullOrEmpty(value))
+            if (CheckForFile(tempDir) != tempDir + "Keys.csv")
             {
-                newValue.Add(value.Substring(0, 4));
-                value = value.Remove(0, 4);
-                count++;
-            }
-            return newValue;
-        }
-        public string GetKey(string type)
-        {
-            List<long> seqKey = new List<long>(new long[] { 1, 8, 2, 3, 9, 0, 6, 5, 4, 7, 10 });
-            string value = "";
-            string key = "";
-            List<string> keyBreakUp = new List<string>();
-            using (var reader = new StreamReader(tempDir + "Keys.csv"))
-            {
-                while (!reader.EndOfStream)
-                {
-                    var line = reader.ReadLine();
-                    var values = line.Split(',');
-                    if(values[2] == type)
-                        value = values[0];
-                }
-            }
-            keyBreakUp = BreakUpValues(value);
-            foreach (long number in seqKey)
-            {
-                key = key + keyBreakUp[Convert.ToInt32(number)];
-            }
-            return key;
-        }
-        public string GetIV(string type)
-        {
-            List<long> seqIV = new List<long>(new long[] { 0, 4, 3, 2, 5, 1 });
-            string value = "";
-            string iv = "";
-            List<string> ivBreakUp = new List<string>();
-            using (var reader = new StreamReader(tempDir + "Keys.csv"))
-            {
-                while (!reader.EndOfStream)
-                {
-                    var line = reader.ReadLine();
-                    var values = line.Split(',');
-                    if (values[2] == type)
-                        value = values[1];
-                }
-            }
-            ivBreakUp = BreakUpValues(value);
-            foreach (long number in seqIV)
-            {
-                iv = iv + ivBreakUp[Convert.ToInt32(number)];
-            }
-            return iv;
-        }
-        public void StoreKey(AesCryptoServiceProvider _aesEncrypt,string type)
-        {
-            if (CheckForFile(tempDir) == tempDir + "Keys.csv")
-            {
-                string keyStored;
-                string ivStored;
-                List<string> keyBreakUp = new List<string>();
-                List<string> ivBreakUp = new List<string>();
-
-                keyBreakUp = BreakUpValues(Convert.ToBase64String(_aesEncrypt.Key));
-                ivBreakUp = BreakUpValues(Convert.ToBase64String(_aesEncrypt.IV));
-                keyStored = newEncyptValues(keyBreakUp);
-                ivStored = newEncyptValues(ivBreakUp);
-
+                RSACryptoServiceProvider rsa =  GetKeyFromContainer("MyKeys");
+                byte[] key = rsa.Encrypt(aesKey, false);
+                byte[] iv = rsa.Encrypt(aesIV, false);
+                string encryptKey = Convert.ToBase64String(key);
+                string encryptIv = Convert.ToBase64String(iv);
                 using (StreamWriter w = new StreamWriter(tempDir + "Keys.csv", append: true))
                 {
-                    var line = string.Format(keyStored + "," + ivStored + "," + type);
+                    var line = string.Format(encryptKey+","+encryptIv);
                     w.WriteLine(line);
                     w.Flush();
                     w.Close();
                 }
                 File.SetAttributes(tempDir + "Keys.csv", FileAttributes.Hidden);
             }
+        }
+
+        public void GenKey_SaveInContainer(string ContainerName)
+        {
+            CspParameters cp = new CspParameters();
+            cp.KeyContainerName = ContainerName;
+
+            RSACryptoServiceProvider rsa = new RSACryptoServiceProvider(cp);
+        }
+
+        public RSACryptoServiceProvider GetKeyFromContainer(string ContainerName)
+        {
+            CspParameters cp = new CspParameters();
+            cp.KeyContainerName = ContainerName;
+
+            RSACryptoServiceProvider rsa = new RSACryptoServiceProvider(cp);
+
+            return rsa;
+        }
+        public void MakePrivateKeyIV(AesCryptoServiceProvider aesEncrypt, string stringEncrypt)
+        {
+            MD5 md5 = MD5.Create();
+            byte[] passbytes = Encoding.ASCII.GetBytes(stringEncrypt);
+            aesEncrypt.Key = md5.ComputeHash(passbytes);
+            aesEncrypt.IV = md5.ComputeHash(passbytes);
+            StoreKeyIV(aesEncrypt.Key, aesEncrypt.IV);
+        }
+        public byte[] GetIV(AesCryptoServiceProvider aesEncrypt)
+        {
+            string line = "", value = "";
+            byte[] DecryptedKey = { };
+            if (CheckForFile(tempDir) == tempDir + "Keys.csv")
+            {
+                using (StreamReader reader = new StreamReader(tempDir + "Keys.csv"))
+                {
+                    while (!reader.EndOfStream)
+                    {
+                        line = reader.ReadLine();
+                        var values = line.Split(',');
+                        value = values[1];
+                    }
+                }
+                RSACryptoServiceProvider rsa = GetKeyFromContainer("MyKeys");
+                byte[] iv =  Convert.FromBase64String(value);
+                DecryptedKey = rsa.Decrypt(iv, false);
+            }
+            return DecryptedKey;
+        }
+        public byte[] GetPrivateKey(AesCryptoServiceProvider aesEncrypt)
+        {
+            string line = "", value = "";
+            byte[] DecryptedKey = { };
+            if (CheckForFile(tempDir) == tempDir + "Keys.csv")
+            {
+                using (StreamReader reader = new StreamReader(tempDir + "Keys.csv"))
+                {
+                    while (!reader.EndOfStream)
+                    {
+                        line = reader.ReadLine();
+                        var values = line.Split(',');
+                        value = values[0];
+                    }
+                }
+                RSACryptoServiceProvider rsa = GetKeyFromContainer("MyKeys");
+                byte[] key = Convert.FromBase64String(value);
+                DecryptedKey = rsa.Decrypt(key, false);
+            }
+            return DecryptedKey;
         }
     }
 }
