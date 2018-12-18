@@ -39,7 +39,7 @@ namespace SSD_CRUD_APP
         {
             if (booksListView.SelectedItems.Count == 1)
             {
-                UpdateBook updateBookForm = new UpdateBook(booksListView.SelectedItems[0], this);
+                UpdateBook updateBookForm = new UpdateBook(booksListView.SelectedItems[0], this, _aesEncrypt);
                 updateBookForm.Show();
             }
             else
@@ -169,10 +169,12 @@ namespace SSD_CRUD_APP
         }
         private void UpdateBook()
         {
-            //using (FileStream fStream = new FileStream(tempDir + "LoginDetails.csv", FileMode.Open))
-            //{
-                //using (CryptoStream cStream = new CryptoStream(fStream, new AesManaged().CreateDecryptor(_aesEncrypt.Key, _aesEncrypt.IV), CryptoStreamMode.Write))
-                //{
+            byte[] key = keyClass.GetPrivateKey(_aesEncrypt);
+            byte[] iv = keyClass.GetIV(_aesEncrypt);
+            using (FileStream fStream = new FileStream(tempDir + "BookDetails.csv", FileMode.Open))
+            {
+                using (CryptoStream cStream = new CryptoStream(fStream, new AesManaged().CreateEncryptor(key, iv), CryptoStreamMode.Write))
+                {
                     using (var reader = new StreamReader(tempDir + "BookDetails.csv"))
                     {
                         while (!reader.EndOfStream)
@@ -183,8 +185,8 @@ namespace SSD_CRUD_APP
                             booksListView.Items.Add(itm);
                         }
                     }
-                //}
-            //}
+                }
+            }
         }
         private void Form1_FormClosing(Object sender, FormClosingEventArgs e)
         {
