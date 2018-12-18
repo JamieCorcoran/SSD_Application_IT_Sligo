@@ -70,10 +70,6 @@ namespace SSD_CRUD_APP
                         }
                     }
                 }
-                //using (FileStream fStream = new FileStream(tempDir + "BookDetails.csv", FileMode.Open))
-                //{
-                //    fStream.SetLength(0);
-                //}
                 using (FileStream fStream = new FileStream(tempDir + "BookDetails.csv", FileMode.Open))
                 {
                     using (CryptoStream cStream = new CryptoStream(fStream, new AesManaged().CreateEncryptor(key, iv), CryptoStreamMode.Write))
