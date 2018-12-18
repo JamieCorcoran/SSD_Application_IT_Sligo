@@ -16,10 +16,10 @@ namespace SSD_CRUD_APP
     {
         KeyClass keyClass = new KeyClass();
         BookControl _bookControl = new BookControl();
-        private byte[] _key;
-        private byte[] _iv;
         AesCryptoServiceProvider _aesEncrypt = new AesCryptoServiceProvider();
         private string tempDir = Path.GetTempPath();
+        private byte[] _key;
+        private byte[] _iv;
         public AddBook()
         {
             InitializeComponent();
@@ -29,8 +29,8 @@ namespace SSD_CRUD_APP
             InitializeComponent();
             _bookControl = bookCtrl;
             _aesEncrypt = aesEncrypt;
-            //_key = Convert.FromBase64String(keyClass.GetKey("y")); ;
-            //_iv = Convert.FromBase64String(keyClass.GetIV("y")); ;
+            _key = keyClass.GetPrivateKey(_aesEncrypt);
+            _iv = keyClass.GetIV(_aesEncrypt);
         }
 
         private void cancelButton_Click(object sender, EventArgs e)

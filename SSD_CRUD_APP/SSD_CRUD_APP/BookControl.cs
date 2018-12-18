@@ -27,8 +27,6 @@ namespace SSD_CRUD_APP
             InitializeComponent();
             CheckForFile();
             _aesEncrypt = aesEncrypt;
-            //if(string.IsNullOrEmpty(keyClass.GetKey("y")))
-                //keyClass.StoreKey(_aesEncrypt, "y");
         }
 
         private void addBook_Click(object sender, EventArgs e)
@@ -82,11 +80,11 @@ namespace SSD_CRUD_APP
             booksListView.Items.Clear();
             try
             {
-                //byte[] key = Convert.FromBase64String(keyClass.GetKey("y"));
-                //byte[] iv = Convert.FromBase64String(keyClass.GetIV("y"));
+                byte[] key = keyClass.GetPrivateKey(_aesEncrypt);
+                byte[] iv = keyClass.GetIV(_aesEncrypt);
                 using (FileStream fStream = new FileStream(tempDir + "BookDetails.csv", FileMode.Open))
                 {
-                    using (CryptoStream cStream = new CryptoStream(fStream, new AesManaged().CreateDecryptor(_aesEncrypt.Key, _aesEncrypt.IV), CryptoStreamMode.Read))
+                    using (CryptoStream cStream = new CryptoStream(fStream, new AesManaged().CreateDecryptor(key, iv), CryptoStreamMode.Read))
                     {
                         using (StreamReader reader = new StreamReader(cStream))
                         {
@@ -115,8 +113,8 @@ namespace SSD_CRUD_APP
         }
         private void DeleteBook()
         {
-            //byte[] key = Convert.FromBase64String(keyClass.GetKey("y"));
-            //byte[] iv = Convert.FromBase64String(keyClass.GetIV("y"));
+            byte[] key = keyClass.GetPrivateKey(_aesEncrypt);
+            byte[] iv = keyClass.GetIV(_aesEncrypt);
             List<string> allBooks = GetBooks();
             string addBooksBack = "";
             string bookToRemove="";
@@ -143,17 +141,28 @@ namespace SSD_CRUD_APP
             }
             else
             {
-                using (FileStream fStream = new FileStream(tempDir + "BookDetails.csv", FileMode.Open))
+                try
                 {
-                    using (CryptoStream cStream = new CryptoStream(fStream, new AesManaged().CreateEncryptor(_aesEncrypt.Key, _aesEncrypt.IV), CryptoStreamMode.Write))
+                    using (FileStream fStream = new FileStream(tempDir + "BookDetails.csv", FileMode.Open))
                     {
-                        using (StreamWriter w = new StreamWriter(cStream))
+                        fStream.SetLength(0);
+                    }
+                    using (FileStream fStream = new FileStream(tempDir + "BookDetails.csv", FileMode.Open))
+                    {
+                        using (CryptoStream cStream = new CryptoStream(fStream, new AesManaged().CreateEncryptor(key, iv), CryptoStreamMode.Write))
                         {
-                            w.WriteLine(addBooksBack);
-                            w.Flush();
-                            w.Close();
+                            using (StreamWriter w = new StreamWriter(cStream))
+                            {
+                                w.WriteLine(addBooksBack);
+                                w.Flush();
+                                w.Close();
+                            }
                         }
                     }
+                }
+                catch(Exception e)
+                {
+                    Console.WriteLine(e);
                 }
             }
             ReadInBooks();
@@ -183,14 +192,14 @@ namespace SSD_CRUD_APP
         }
         private List<string> GetBooks()
         {
-            //byte[] key = Convert.FromBase64String(keyClass.GetKey("y"));
-            //byte[] iv = Convert.FromBase64String(keyClass.GetIV("y"));
+            byte[] key = keyClass.GetPrivateKey(_aesEncrypt);
+            byte[] iv = keyClass.GetIV(_aesEncrypt);
             List<string> allBooks = new List<string>();
             try
             {
                 using (FileStream fStream = new FileStream(tempDir + "BookDetails.csv", FileMode.Open))
                 {
-                    using (CryptoStream cStream = new CryptoStream(fStream, new AesManaged().CreateDecryptor(_aesEncrypt.Key, _aesEncrypt.IV), CryptoStreamMode.Read))
+                    using (CryptoStream cStream = new CryptoStream(fStream, new AesManaged().CreateDecryptor(key, iv), CryptoStreamMode.Read))
                     {
                         using (StreamReader reader = new StreamReader(cStream))
                         {
