@@ -35,25 +35,32 @@ namespace SSD_CRUD_APP
         {
             if (CheckForNullorEmpty())
             {
-                keyClass.GenKey_SaveInContainer("MyKeys");
-                keyClass.MakePrivateKeyIV(_aesEncrypt, Environment.UserName);
-                using (FileStream fStream = new FileStream(tempDir + "LoginDetails.csv", FileMode.Open))
+                if (passwordTextBox.Text.Length < 6)
                 {
-                    using (CryptoStream cStream = new CryptoStream(fStream, new AesManaged().CreateEncryptor(_aesEncrypt.Key, _aesEncrypt.IV), CryptoStreamMode.Write))
+                    MessageBox.Show("Password has to be atleast 6 characters long.", "Error", MessageBoxButtons.OK);
+                }
+                else
+                {
+                    keyClass.GenKey_SaveInContainer("MyKeys");
+                    keyClass.MakePrivateKeyIV(_aesEncrypt, Environment.UserName);
+                    using (FileStream fStream = new FileStream(tempDir + "LoginDetails.csv", FileMode.Open))
                     {
-                        using (StreamWriter w = new StreamWriter(cStream))
+                        using (CryptoStream cStream = new CryptoStream(fStream, new AesManaged().CreateEncryptor(_aesEncrypt.Key, _aesEncrypt.IV), CryptoStreamMode.Write))
                         {
-                            var line = string.Format(usernameTextBox.Text + "," + passwordTextBox.Text);
-                            w.WriteLine(line);
-                            w.Flush();
-                            w.Close();
-                            this.Hide();
-                            LoginForm login = new LoginForm(_aesEncrypt);
-                            login.Show();
+                            using (StreamWriter w = new StreamWriter(cStream))
+                            {
+                                var line = string.Format(usernameTextBox.Text + "," + passwordTextBox.Text);
+                                w.WriteLine(line);
+                                w.Flush();
+                                w.Close();
+                                this.Hide();
+                                LoginForm login = new LoginForm(_aesEncrypt);
+                                login.Show();
+                            }
                         }
                     }
+                    File.SetAttributes(tempDir + "LoginDetails.csv", FileAttributes.Hidden);
                 }
-                File.SetAttributes(tempDir + "LoginDetails.csv", FileAttributes.Hidden);
             }
             else
                 MessageBox.Show("Invaild Please enter details", "Error", MessageBoxButtons.OK);
