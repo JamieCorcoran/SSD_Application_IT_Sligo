@@ -46,14 +46,14 @@ namespace SSD_CRUD_APP
         {
             if (CheckForFile(tempDir) != tempDir + "Keys.csv")
             {
-                RSACryptoServiceProvider rsa =  GetKeyFromContainer("MyKeys");
+                RSACryptoServiceProvider rsa = GetKeyFromContainer("MyKeys");
                 byte[] key = rsa.Encrypt(aesKey, false);
                 byte[] iv = rsa.Encrypt(aesIV, false);
                 string encryptKey = Convert.ToBase64String(key);
                 string encryptIv = Convert.ToBase64String(iv);
                 using (StreamWriter w = new StreamWriter(tempDir + "Keys.csv", append: true))
                 {
-                    var line = string.Format(encryptKey+","+encryptIv);
+                    var line = string.Format(encryptKey + "," + encryptIv);
                     w.WriteLine(line);
                     w.Flush();
                     w.Close();
